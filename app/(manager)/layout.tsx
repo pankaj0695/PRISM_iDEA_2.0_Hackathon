@@ -1,0 +1,17 @@
+import { UnionBankHeader } from "@/components/ub/UnionBankHeader";
+
+export default function ManagerLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen">
+      <UnionBankHeader
+        homeHref="/manager"
+        navItems={[
+          { href: "/manager", label: "Queue" },
+          { href: "/manager/alerts", label: "All alerts" },
+          { href: "/manager/whatif", label: "What-If" },
+        ]}
+      />
+      <main className="mx-auto max-w-[1400px] px-6 py-6">{children}</main>
+    </div>
+  );
+}

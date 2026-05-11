@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  /* Union Bank of India palette */
+  --ub-red: #e30613;
+  --ub-red-dark: #b50410;
+  --ub-red-50: #fef2f3;
+  --ub-blue: #003b71;
+  --ub-blue-dark: #002a52;
+  --ub-blue-50: #eef4fb;
+  --ub-yellow: #ffb81c;
+
+  --bg: #ffffff;
+  --bg-soft: #f6f8fb;
+  --bg-muted: #eef1f5;
+  --fg: #0f172a;
+  --fg-muted: #475569;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --critical: #b91c1c;
+  --high: #ea580c;
+  --watch: #ca8a04;
+  --clear: #15803d;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-ub-red: var(--ub-red);
+  --color-ub-red-dark: var(--ub-red-dark);
+  --color-ub-red-50: var(--ub-red-50);
+  --color-ub-blue: var(--ub-blue);
+  --color-ub-blue-dark: var(--ub-blue-dark);
+  --color-ub-blue-50: var(--ub-blue-50);
+  --color-ub-yellow: var(--ub-yellow);
+  --color-bg-soft: var(--bg-soft);
+  --color-bg-muted: var(--bg-muted);
+  --color-fg-muted: var(--fg-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-sev-critical: var(--critical);
+  --color-sev-high: var(--high);
+  --color-sev-watch: var(--watch);
+  --color-sev-clear: var(--clear);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+}
