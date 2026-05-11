@@ -7,6 +7,7 @@ export default function ManagerLayout({ children }: { children: React.ReactNode 
         homeHref="/manager"
         navItems={[
           { href: "/manager", labelKey: "nav.queue" },
+          { href: "/manager/operations", labelKey: "nav.operations" },
           { href: "/manager/alerts", labelKey: "nav.allAlerts" },
           { href: "/manager/whatif", labelKey: "nav.whatIf" },
         ]}

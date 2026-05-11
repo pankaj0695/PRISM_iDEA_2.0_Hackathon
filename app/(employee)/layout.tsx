@@ -7,6 +7,7 @@ export default function EmployeeLayout({ children }: { children: React.ReactNode
         homeHref="/employee"
         navItems={[
           { href: "/employee", labelKey: "nav.overview" },
+          { href: "/employee/operations", labelKey: "nav.operations" },
           { href: "/employee/activity", labelKey: "nav.myActivity" },
           { href: "/employee/disclosure", labelKey: "nav.disclosure" },
         ]}

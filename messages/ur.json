@@ -26,7 +26,8 @@
     "queue": "تفتیشی قطار",
     "allAlerts": "تمام انتباہات",
     "myActivity": "میری سرگرمی",
-    "disclosure": "رضاکارانہ افشا"
+    "disclosure": "رضاکارانہ افشا",
+    "operations": "Operations"
   },
   "login": {
     "title": "سائن ان کریں",
@@ -164,5 +165,60 @@
     "submit": "افشا جمع کریں",
     "submitting": "جمع ہو رہا ہے…",
     "submitted": "جمع ہو گیا۔ حوالہ: {id}"
+  },
+  "operations": {
+    "title": "Operations Console",
+    "subtitleEmployee": "Perform real banking actions. Suspicious behaviour is flagged in real time and pushed to admin dashboards.",
+    "subtitleManager": "Branch-manager operations. Higher-privilege actions (FD break, approval override, config change) are scored more strictly.",
+    "formEyebrow": "EXECUTE ACTION",
+    "execute": "Execute action",
+    "executing": "Executing…",
+    "placeholder": "Pick an action above, fill in the fields, then execute. The result panel shows whether PRISM flagged the action.",
+    "resultTitle": "Execution result",
+    "resultSubtitle": "Activity log + transaction are written to MongoDB; alerts stream via SSE.",
+    "flagged": "Action flagged as suspicious — PRISM alert created and pushed live.",
+    "clean": "Action completed without flagging — PRISM saw no anomaly.",
+    "recentTitle": "My last actions",
+    "recentSubtitle": "Live, auto-refreshing.",
+    "rawRecords": "Show raw records",
+    "fields": {
+      "accountId": "Account ID",
+      "amount": "Amount (₹)",
+      "narration": "Narration",
+      "narrationPlaceholder": "e.g. FD closure on customer request",
+      "recordCount": "Records to export",
+      "accountIds": "Account IDs (comma- or space-separated)",
+      "pretendOffHours": "Simulate “now” as 02:47 AM (demo off-hours)"
+    },
+    "action": {
+      "TRANSACTION_INITIATE": {
+        "label": "Initiate transaction",
+        "hint": "Debit a customer account. Off-hours / dormant / over-limit auto-flag."
+      },
+      "ACCOUNT_VIEW": {
+        "label": "View account",
+        "hint": "Pull up a customer account. Dormant / cross-branch / off-hours auto-flag."
+      },
+      "BULK_ACCOUNT_ACCESS": {
+        "label": "Bulk account access",
+        "hint": "Inspect 20+ accounts in one session."
+      },
+      "BULK_DATA_EXPORT": {
+        "label": "Bulk data export",
+        "hint": "Export customer records to a file (>100 rows flagged)."
+      },
+      "FD_BREAK": {
+        "label": "Break Fixed Deposit",
+        "hint": "Premature FD closure — the FD-fraud Manimekhalai scenario."
+      },
+      "OVERRIDE_LIMIT": {
+        "label": "Override approval limit",
+        "hint": "Approve a transaction above the standard authority."
+      },
+      "CONFIG_CHANGE": {
+        "label": "Change configuration",
+        "hint": "System config touch — always reviewed by an analyst."
+      }
+    }
   }
 }
