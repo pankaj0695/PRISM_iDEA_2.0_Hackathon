@@ -2,29 +2,25 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ub/Button";
 import type { Alert, AlertStatus } from "@/lib/db/schemas";
-import { CheckCircle2, XCircle, AlertTriangle, Snowflake } from "lucide-react";
+import { XCircle, AlertTriangle, Snowflake, ShieldAlert } from "lucide-react";
 
 type Decision = "CONFIRM_FRAUD" | "DISMISS" | "ESCALATE" | "FREEZE_ACCOUNT";
 
 const decisionConfig: Record<
   Decision,
-  { label: string; icon: React.ComponentType<{ className?: string }>; variant: "danger" | "primary" | "outline" | "secondary" }
+  { tKey: string; icon: React.ComponentType<{ className?: string }>; variant: "danger" | "primary" | "outline" | "secondary" }
 > = {
-  CONFIRM_FRAUD: { label: "Confirm fraud", icon: AlertTriangle, variant: "danger" },
-  ESCALATE: { label: "Escalate", icon: AlertTriangle, variant: "primary" },
-  FREEZE_ACCOUNT: { label: "Freeze account", icon: Snowflake, variant: "secondary" },
-  DISMISS: { label: "Dismiss", icon: XCircle, variant: "outline" },
+  CONFIRM_FRAUD: { tKey: "alert.confirmFraud", icon: ShieldAlert, variant: "danger" },
+  ESCALATE: { tKey: "alert.escalate", icon: AlertTriangle, variant: "primary" },
+  FREEZE_ACCOUNT: { tKey: "alert.freezeAccount", icon: Snowflake, variant: "secondary" },
+  DISMISS: { tKey: "alert.dismiss", icon: XCircle, variant: "outline" },
 };
 
-export function AlertActions({
-  alert,
-  role,
-}: {
-  alert: Alert;
-  role: string;
-}) {
+export function AlertActions({ alert, role }: { alert: Alert; role: string }) {
+  const t = useTranslations();
   const [notes, setNotes] = useState("");
   const [busy, setBusy] = useState<Decision | null>(null);
   const [status, setStatus] = useState<AlertStatus>(alert.status);
@@ -45,7 +41,6 @@ export function AlertActions({
         router.refresh();
       } else {
         const data = await r.json();
-        alert?.alert_id; // noop; we just want to surface the error
         window.alert(data.error || "Action failed");
       }
     } finally {
@@ -57,21 +52,21 @@ export function AlertActions({
   const canRecommendFreeze = role === "BRANCH_MANAGER";
 
   return (
-    <div className="rounded-md border border-[var(--border)] bg-white p-3">
+    <div className="ub-card p-3">
       <div className="mb-2 flex items-center justify-between">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--fg-muted)]">
-          Disposition
+        <h3 className="text-[11px] font-semibold uppercase tracking-wider text-[var(--fg-muted)]">
+          {t("alert.disposition")}
         </h3>
         <span className="text-[11px] text-[var(--fg-muted)]">
-          Status:{" "}
+          {t("alert.status")}:{" "}
           <span className="font-semibold text-[var(--fg)]">{status.replace(/_/g, " ")}</span>
         </span>
       </div>
       <textarea
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
-        placeholder="Investigation notes / evidence summary…"
-        className="mb-3 w-full resize-y rounded-md border border-[var(--border-strong)] px-2.5 py-1.5 text-sm focus:border-[var(--ub-blue)] focus:outline-none"
+        placeholder={t("alert.notesPlaceholder")}
+        className="mb-3 w-full resize-y rounded-md border border-[var(--border-strong)] bg-white px-2.5 py-1.5 text-sm focus:border-[var(--ub-blue)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
         rows={3}
       />
       <div className="flex flex-wrap gap-2">
@@ -82,7 +77,7 @@ export function AlertActions({
             decision="FREEZE_ACCOUNT"
             busy={busy}
             onClick={act}
-            override={canRecommendFreeze ? "Recommend freeze" : undefined}
+            overrideKey={canRecommendFreeze ? "alert.recommendFreeze" : undefined}
           />
         )}
         <DecisionButton decision="DISMISS" busy={busy} onClick={act} />
@@ -95,23 +90,21 @@ function DecisionButton({
   decision,
   busy,
   onClick,
-  override,
+  overrideKey,
 }: {
   decision: Decision;
   busy: Decision | null;
   onClick: (d: Decision) => void;
-  override?: string;
+  overrideKey?: string;
 }) {
+  const t = useTranslations();
   const cfg = decisionConfig[decision];
   const Icon = cfg.icon;
   return (
-    <Button
-      variant={cfg.variant}
-      onClick={() => onClick(decision)}
-      disabled={busy !== null}
-    >
+    <Button variant={cfg.variant} onClick={() => onClick(decision)} disabled={busy !== null}>
       <Icon className="h-4 w-4" />
-      {busy === decision ? "Working…" : override || cfg.label}
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      {busy === decision ? t("alert.working") : (t as any)(overrideKey || cfg.tKey)}
     </Button>
   );
 }

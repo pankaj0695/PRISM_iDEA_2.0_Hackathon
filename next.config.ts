@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  turbopack: {
+    root: __dirname,
+  },
+  // Hide the Next.js dev-tools floating button in development.
+  devIndicators: false,
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

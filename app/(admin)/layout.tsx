@@ -6,10 +6,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <UnionBankHeader
         homeHref="/admin"
         navItems={[
-          { href: "/admin", label: "Overview" },
-          { href: "/admin/alerts", label: "Alerts" },
-          { href: "/admin/graph", label: "Relationship graph" },
-          { href: "/admin/whatif", label: "What-If" },
+          { href: "/admin", labelKey: "nav.overview" },
+          { href: "/admin/alerts", labelKey: "nav.alerts" },
+          { href: "/admin/graph", labelKey: "nav.graph" },
+          { href: "/admin/whatif", labelKey: "nav.whatIf" },
         ]}
       />
       <main className="mx-auto max-w-[1400px] px-6 py-6">{children}</main>

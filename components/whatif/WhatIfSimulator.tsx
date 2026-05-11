@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ub/Button";
 import { Panel } from "@/components/ub/Panel";
 import { SeverityBadge } from "@/components/ub/SeverityBadge";
@@ -24,6 +26,7 @@ const EVENT_TYPES = [
 ];
 
 export function WhatIfSimulator() {
+  const t = useTranslations();
   const [employeeId, setEmployeeId] = useState("EMP_00007");
   const [eventType, setEventType] = useState(EVENT_TYPES[0]);
   const [amount, setAmount] = useState("500000");
@@ -61,90 +64,93 @@ export function WhatIfSimulator() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-[420px_1fr]">
-      <Panel title="What-If inputs" description="Pose a hypothetical action — no alert is persisted.">
+      <Panel title={t("whatIf.inputsTitle")} description={t("whatIf.inputsSubtitle")}>
         <div className="space-y-3">
-          <Field label="Employee ID">
+          <Field label={t("whatIf.employeeId")}>
             <input
               value={employeeId}
               onChange={(e) => setEmployeeId(e.target.value)}
-              className="input"
+              className="ub-input"
               placeholder="EMP_00007"
             />
           </Field>
-          <Field label="Event type">
+          <Field label={t("whatIf.eventType")}>
             <select
               value={eventType}
               onChange={(e) => setEventType(e.target.value)}
-              className="input"
+              className="ub-input"
             >
-              {EVENT_TYPES.map((t) => (
-                <option key={t} value={t}>
-                  {t.replace(/_/g, " ")}
+              {EVENT_TYPES.map((et) => (
+                <option key={et} value={et}>
+                  {et.replace(/_/g, " ")}
                 </option>
               ))}
             </select>
           </Field>
-          <Field label="Amount (₹)">
+          <Field label={t("whatIf.amount")}>
             <input
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="input"
+              className="ub-input"
               type="number"
               min={0}
             />
           </Field>
-          <Field label="Account ID (optional)">
-            <input value={accountId} onChange={(e) => setAccountId(e.target.value)} className="input" />
+          <Field label={t("whatIf.accountId")}>
+            <input
+              value={accountId}
+              onChange={(e) => setAccountId(e.target.value)}
+              className="ub-input"
+            />
           </Field>
-          <Button onClick={run} disabled={busy}>
-            {busy ? "Scoring…" : "Run simulation"}
+          <Button onClick={run} disabled={busy} size="lg">
+            <Sparkles className="h-4 w-4" /> {busy ? t("whatIf.running") : t("whatIf.run")}
           </Button>
-          {error && <div className="text-sm text-[var(--critical)]">{error}</div>}
+          {error && <div className="text-sm text-[var(--sev-critical)]">{error}</div>}
         </div>
         <style jsx>{`
-          .input {
+          .ub-input {
             width: 100%;
             border: 1px solid var(--border-strong);
             border-radius: 6px;
-            padding: 6px 8px;
+            padding: 7px 9px;
             font-size: 13px;
             background: white;
+            transition: border-color 0.15s, box-shadow 0.15s;
           }
-          .input:focus {
+          .ub-input:focus {
             outline: none;
             border-color: var(--ub-blue);
+            box-shadow: 0 0 0 2px var(--ring);
           }
         `}</style>
       </Panel>
 
-      <Panel
-        title="Simulation result"
-        description="Mock detector. Drop in real ML by setting DETECTOR=fastapi in .env."
-      >
+      <Panel title={t("whatIf.resultTitle")} description={t("whatIf.resultSubtitle")}>
         {!result ? (
           <div className="rounded-md border border-dashed border-[var(--border-strong)] p-8 text-center text-sm text-[var(--fg-muted)]">
-            Enter inputs and click <strong>Run simulation</strong>.
+            {t("whatIf.placeholder")}
           </div>
         ) : (
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-3">
-              <SeverityBadge severity={result.severity} />
+              <SeverityBadge severity={result.severity} pulse={result.severity === "CRITICAL"} />
               <span className="text-sm">
-                Risk score:{" "}
-                <span className="text-base font-semibold tabular-nums">
+                {t("alert.riskScore")}:{" "}
+                <span className="text-base font-bold tabular-nums">
                   {Math.round(result.risk_score * 100)}
                 </span>
                 <span className="text-[var(--fg-muted)]">/100</span>
               </span>
               <span className="text-sm text-[var(--fg-muted)]">
-                Layer 1 {Math.round(result.layer1.score * 100)} · Layer 2{" "}
+                L1 {Math.round(result.layer1.score * 100)} · L2{" "}
                 {Math.round(result.layer2.score * 100)}
               </span>
             </div>
             <div className="grid gap-3 md:grid-cols-3">
-              <BeliefMassBars title="Layer 1 — Graph" masses={result.layer1.belief} />
-              <BeliefMassBars title="Layer 2 — Anomaly" masses={result.layer2.belief} />
-              <BeliefMassBars title="Fused (Dempster–Shafer)" masses={result.fused_belief} />
+              <BeliefMassBars title={t("alert.beliefLayer1")} masses={result.layer1.belief} />
+              <BeliefMassBars title={t("alert.beliefLayer2")} masses={result.layer2.belief} />
+              <BeliefMassBars title={t("alert.beliefFused")} masses={result.fused_belief} />
             </div>
             <CausalChain steps={result.causal_chain} chainProbability={result.chain_probability} />
           </div>

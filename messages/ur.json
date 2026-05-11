@@ -1,0 +1,168 @@
+{
+  "common": {
+    "loading": "لوڈ ہو رہا ہے…",
+    "noRecords": "کوئی ریکارڈ نہیں",
+    "signOut": "سائن آؤٹ",
+    "signedInAs": "سائن ان ہیں",
+    "branch": "برانچ",
+    "language": "زبان",
+    "back": "واپس",
+    "submit": "جمع کریں",
+    "cancel": "منسوخ",
+    "save": "محفوظ کریں",
+    "all": "تمام"
+  },
+  "brand": {
+    "name": "PRISM",
+    "tagline": "خصوصی‌اختیارات استعمال‌کنندہ خطرہ شناخت و نگرانی",
+    "owner": "یونین بینک آف انڈیا",
+    "bannerStrip": "یونین بینک آف انڈیا · iDEA 2.0 ہیکاتھون · ٹیم GangOfFour"
+  },
+  "nav": {
+    "overview": "جائزہ",
+    "alerts": "انتباہات",
+    "graph": "تعلق گراف",
+    "whatIf": "اگر-ایسا",
+    "queue": "تفتیشی قطار",
+    "allAlerts": "تمام انتباہات",
+    "myActivity": "میری سرگرمی",
+    "disclosure": "رضاکارانہ افشا"
+  },
+  "login": {
+    "title": "سائن ان کریں",
+    "employeeCode": "ملازم کوڈ",
+    "password": "پاس ورڈ",
+    "signIn": "سائن ان",
+    "signingIn": "سائن ان ہو رہا ہے…",
+    "demoAccounts": "ڈیمو اکاؤنٹس (پاس ورڈ: prism123)",
+    "demoNote": "کردار ملازم کے درجے اور عہدے سے خود کار طریقے سے طے ہوتا ہے۔",
+    "demoAdmin": "EMP_00007 — ایڈمن (اسسٹنٹ جنرل مینیجر)",
+    "demoManager": "EMP_00001 — برانچ مینیجر",
+    "demoEmployee": "EMP_00050 — ملازم (اسسٹنٹ مینیجر)",
+    "tagline": "اندرونی دھوکہ دہی کے لیے AI سے چلنے والی پیشگی انتباہ — سادہ زبان میں قابل وضاحت۔"
+  },
+  "admin": {
+    "title": "PRISM آپریشنز سینٹر",
+    "subtitle": "براہ راست اندرونی دھوکہ دہی نگرانی — انتباہات صرف اس وقت جاری ہوں گے جب دونوں پرتیں متفق ہوں۔",
+    "openGraph": "تعلق گراف کھولیں",
+    "openWhatIf": "اگر-ایسا سیمولیٹر"
+  },
+  "manager": {
+    "title": "برانچ تفتیشی قطار",
+    "subtitle": "صرف آپ کی برانچ کے انتباہات۔ آپ خارج، بڑھا، یا اکاؤنٹ فریز کی سفارش کر سکتے ہیں۔"
+  },
+  "employee": {
+    "welcome": "خوش آمدید، {name}",
+    "subtitle": "PRISM آپ سے منسوب ہر سسٹم کارروائی کا شفاف ریکارڈ رکھتا ہے۔",
+    "recordedTitle": "PRISM آپ کے بارے میں کیا ریکارڈ کرتا ہے",
+    "recordedBullets": "• گزشتہ 30 دنوں کی لاگ ان، آلات اور IP پتے\n• آپ نے دیکھے گاہک اکاؤنٹس اور شروع کیے گئے لین دین\n• آپ کی منظوریاں اور کوئی بھی اوور رائڈ کارروائیاں\n• بیرونی اکاؤنٹس کا رضاکارانہ افشا",
+    "openActivity": "میری سرگرمی لاگ کھولیں",
+    "submitDisclosure": "رضاکارانہ افشا جمع کریں",
+    "activityTitle": "میری سرگرمی لاگ",
+    "activitySubtitle": "PRISM آپ کے بارے میں جو ریکارڈ کرتا ہے اس پر مکمل شفافیت۔",
+    "trustedDevices": "قابل اعتماد آلات و IP",
+    "recentLogins": "حالیہ لاگ ان",
+    "recentActions": "آخری 100 کارروائیاں"
+  },
+  "kpi": {
+    "criticalAlerts": "اہم انتباہات",
+    "totalOpen": "کل کھلے: {n}",
+    "suspiciousEvents": "مشکوک واقعات (سیڈ شدہ)",
+    "txnsAndLogs": "{tx} لین دین · {logs} لاگ",
+    "dormantAccounts": "غیر فعال اکاؤنٹس",
+    "dormantHint": "ابتدائی بے ضابطگی کا اشاریہ",
+    "branchesMonitored": "زیرِ نگرانی شاخیں",
+    "branchesHint": "{employees} ملازم · {customers} گاہک",
+    "accounts": "اکاؤنٹس",
+    "transactions": "لین دین",
+    "activityLogs": "سرگرمی لاگز",
+    "dependents": "زیرِ کفالت",
+    "openAlerts": "برانچ میں کھلے انتباہات",
+    "criticalShort": "اہم: {n}",
+    "employees": "ملازم",
+    "employeesHint": "اکاؤنٹس {n}",
+    "recent": "حالیہ مشکوک واقعات",
+    "recentHint": "سیڈ شدہ منظرناموں سے",
+    "recentActions": "حالیہ کارروائیاں (30 دن)",
+    "devices": "قابل اعتماد آلات",
+    "disclosures": "جمع شدہ افشا",
+    "disclosuresHint": "/employee/disclosure پر جمع کریں"
+  },
+  "feed": {
+    "liveTitle": "براہ راست انتباہ فیڈ",
+    "liveSubtitle": "SSE-سبسکرائب۔ نئے انتباہات فوراً نظر آتے ہیں۔",
+    "severityTrend": "شدت کا رجحان",
+    "severityTrendSubtitle": "شدت کے مطابق روزانہ انتباہی تقسیم۔",
+    "empty": "ابھی تک کوئی انتباہ نہیں — ڈیمو فیڈ کے لیے npm run seed-alerts چلائیں۔"
+  },
+  "alert": {
+    "riskScore": "خطرہ اسکور",
+    "narrative": "تفتیش کار کہانی",
+    "causalChain": "سبب-سلسلہ (SHAP-ترتیب)",
+    "chainProbability": "سلسلہ امکان",
+    "disposition": "فیصلہ",
+    "status": "حالت",
+    "confirmFraud": "دھوکہ تصدیق",
+    "escalate": "بڑھائیں",
+    "freezeAccount": "اکاؤنٹ منجمد کریں",
+    "recommendFreeze": "منجمد کرنے کی سفارش",
+    "dismiss": "خارج",
+    "working": "جاری…",
+    "notesPlaceholder": "تفتیشی نوٹ / ثبوت کا خلاصہ…",
+    "beliefLayer1": "پرت 1 — گراف",
+    "beliefLayer2": "پرت 2 — بے ضابطگی",
+    "beliefFused": "مدغم (ڈیمپسٹر–شیفر)",
+    "beliefSum": "m(دھوکہ + جائز + غیر یقینی) = 1",
+    "fraud": "دھوکہ",
+    "uncertain": "غیر یقینی",
+    "legitimate": "جائز"
+  },
+  "severity": {
+    "CRITICAL": "اہم",
+    "HIGH": "زیادہ",
+    "WATCH": "نگرانی",
+    "CLEAR": "صاف"
+  },
+  "whatIf": {
+    "title": "اگر-ایسا سیمولیٹر",
+    "subtitle": "ایک فرضی کارروائی تجویز کریں اور اس کا متوقع خطرہ اسکور دیکھیں۔",
+    "inputsTitle": "اگر-ایسا ان پٹ",
+    "inputsSubtitle": "فرضی کارروائی — کوئی انتباہ محفوظ نہیں ہوگا۔",
+    "resultTitle": "سیمولیشن نتیجہ",
+    "resultSubtitle": "ماک ڈیٹیکٹر۔ .env میں DETECTOR=fastapi مقرر کر کے اصلی ML شامل کریں۔",
+    "employeeId": "ملازم ID",
+    "eventType": "واقعہ کی قسم",
+    "amount": "رقم (₹)",
+    "accountId": "اکاؤنٹ ID (اختیاری)",
+    "run": "سیمولیشن چلائیں",
+    "running": "اسکورنگ…",
+    "placeholder": "ان پٹ درج کریں اور سیمولیشن چلائیں پر کلک کریں۔"
+  },
+  "graph": {
+    "title": "تعلق اور مستفید نیٹ ورک",
+    "subtitle": "پرت 1 جو گراف استعمال کرتی ہے — زیرِ کفالت، ملازم اکاؤنٹس، زیر انتظام گاہک اور دوسری طرف کے اکاؤنٹس۔",
+    "employeeId": "ملازم ID",
+    "load": "لوڈ",
+    "legend": {
+      "employee": "ملازم",
+      "dependent": "زیرِ کفالت",
+      "customer": "گاہک",
+      "account": "اکاؤنٹ",
+      "branch": "برانچ"
+    }
+  },
+  "disclosure": {
+    "title": "رضاکارانہ افشا",
+    "subtitle": "محترمہ اے۔ منی میکھلائی کی تجویز کے مطابق — آپ جو بیرونی بینک اکاؤنٹس رکھتے یا چلاتے ہیں انہیں پیشگی ظاہر کریں۔",
+    "formTitle": "بیرونی اکاؤنٹ ظاہر کریں",
+    "bankName": "بیرونی بینک کا نام",
+    "accountNumber": "بیرونی اکاؤنٹ نمبر",
+    "ifsc": "IFSC (اگر معلوم ہو)",
+    "relationship": "ہولڈر کا تعلق",
+    "balance": "اعلان کردہ بیلنس (₹)",
+    "reason": "وجہ / سیاق و سباق",
+    "submit": "افشا جمع کریں",
+    "submitting": "جمع ہو رہا ہے…",
+    "submitted": "جمع ہو گیا۔ حوالہ: {id}"
+  }
+}

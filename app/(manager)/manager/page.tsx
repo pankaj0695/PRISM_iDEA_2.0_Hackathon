@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
+import { AlertTriangle, Building2, Database } from "lucide-react";
 import { AlertList } from "@/components/alerts/AlertList";
 import { KpiCard } from "@/components/ub/KpiCard";
 import { Panel } from "@/components/ub/Panel";
-import { AlertTriangle, Building2, Database } from "lucide-react";
 
 async function fetchOverview() {
   const jar = await cookies();
@@ -17,41 +18,44 @@ function fmt(n: number | undefined) {
 }
 
 export default async function ManagerHome() {
+  const t = await getTranslations();
   const o = await fetchOverview();
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[var(--fg)]">Branch investigation queue</h1>
-        <p className="text-sm text-[var(--fg-muted)]">
-          Alerts scoped to your branch. You can dismiss, escalate, or recommend account freeze.
-        </p>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--ub-blue)]">
+          {t("brand.owner")}
+        </div>
+        <h1 className="text-2xl font-bold text-[var(--fg)]">{t("manager.title")}</h1>
+        <p className="text-sm text-[var(--fg-muted)]">{t("manager.subtitle")}</p>
       </div>
 
       <section className="grid gap-3 sm:grid-cols-3">
         <KpiCard
-          label="Open alerts in branch"
+          label={t("kpi.openAlerts")}
           value={fmt(o?.alerts.total)}
-          hint={`Critical: ${fmt(o?.alerts.by_severity?.CRITICAL)}`}
+          hint={t("kpi.criticalShort", { n: fmt(o?.alerts.by_severity?.CRITICAL) })}
           accent="red"
           icon={<AlertTriangle className="h-4 w-4" />}
         />
         <KpiCard
-          label="Employees"
+          label={t("kpi.employees")}
           value={fmt(o?.collections.employees)}
-          hint={`Accounts ${fmt(o?.collections.accounts)}`}
+          hint={t("kpi.employeesHint", { n: fmt(o?.collections.accounts) })}
           accent="blue"
           icon={<Building2 className="h-4 w-4" />}
         />
         <KpiCard
-          label="Recent suspicious events"
+          label={t("kpi.recent")}
           value={fmt((o?.suspicious.transactions ?? 0) + (o?.suspicious.activity_logs ?? 0))}
-          hint="From the seeded scenarios"
+          hint={t("kpi.recentHint")}
           accent="yellow"
           icon={<Database className="h-4 w-4" />}
         />
       </section>
 
-      <Panel title="Investigation queue">
+      <Panel title={t("nav.queue")}>
         <AlertList basePath="/manager/alerts" />
       </Panel>
     </div>

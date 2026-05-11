@@ -2,6 +2,8 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
+import { ArrowLeft } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { SeverityBadge } from "@/components/ub/SeverityBadge";
 import { Panel } from "@/components/ub/Panel";
 import { BeliefMassBars } from "@/components/alerts/BeliefMassBars";
@@ -24,6 +26,7 @@ export default async function ManagerAlertDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const t = await getTranslations();
   const data = await fetchAlert(id);
   if (!data) notFound();
   const { alert, employee, branch } = data;
@@ -35,41 +38,52 @@ export default async function ManagerAlertDetail({
   return (
     <div className="space-y-4">
       <div>
-        <Link href="/manager" className="text-xs text-[var(--ub-blue)] hover:underline">
-          ← Back to queue
+        <Link
+          href="/manager"
+          className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--ub-blue)] hover:underline"
+        >
+          <ArrowLeft className="h-3 w-3" /> {t("nav.queue")}
         </Link>
       </div>
-      <header className="flex flex-wrap items-start justify-between gap-3 rounded-lg border border-[var(--border)] bg-white p-4 shadow-sm">
-        <div>
-          <div className="flex items-center gap-2">
-            <SeverityBadge severity={alert.severity} />
-            <span className="text-xs text-[var(--fg-muted)]">
-              {format(new Date(alert.triggered_at), "PPP p")}
-            </span>
+      <header className="ub-card-elevated relative overflow-hidden p-4">
+        <div className="absolute inset-y-0 left-0 w-1.5 bg-[var(--ub-red)]" />
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <SeverityBadge severity={alert.severity} pulse={alert.severity === "CRITICAL"} />
+              <span className="text-xs text-[var(--fg-muted)]">
+                {format(new Date(alert.triggered_at), "PPP p")}
+              </span>
+            </div>
+            <h1 className="mt-1 text-xl font-bold text-[var(--fg)]">
+              {alert.event_type.replace(/_/g, " ")}
+            </h1>
+            <div className="mt-1 text-sm text-[var(--fg-muted)]">
+              <span className="font-semibold text-[var(--fg)]">
+                {employee?.full_name || alert.employee_id}
+              </span>{" "}
+              · {employee?.designation || ""} · {t("common.branch")}{" "}
+              {branch?.branch_name || alert.branch_id}
+            </div>
           </div>
-          <h1 className="mt-1 text-xl font-semibold text-[var(--fg)]">
-            {alert.event_type.replace(/_/g, " ")}
-          </h1>
-          <div className="mt-1 text-sm text-[var(--fg-muted)]">
-            Employee: <span className="font-medium text-[var(--fg)]">{employee?.full_name || alert.employee_id}</span> ·{" "}
-            {employee?.designation || ""} · Branch {branch?.branch_name || alert.branch_id}
-          </div>
-        </div>
-        <div className="rounded-md border border-[var(--border)] bg-[var(--bg-soft)] px-3 py-2 text-right">
-          <div className="text-[11px] uppercase tracking-wider text-[var(--fg-muted)]">Risk score</div>
-          <div className="text-3xl font-semibold tabular-nums text-[var(--critical)]">
-            {Math.round(alert.risk_score * 100)}
+          <div className="rounded-md border border-[var(--border)] bg-[var(--bg-soft)] px-4 py-2 text-right">
+            <div className="text-[10px] uppercase tracking-wider text-[var(--fg-muted)]">
+              {t("alert.riskScore")}
+            </div>
+            <div className="text-3xl font-bold tabular-nums text-[var(--sev-critical)]">
+              {Math.round(alert.risk_score * 100)}
+            </div>
           </div>
         </div>
       </header>
 
       <div className="grid gap-3 md:grid-cols-3">
-        <BeliefMassBars title="Layer 1 — Graph" masses={alert.layer1.belief} />
-        <BeliefMassBars title="Layer 2 — Anomaly" masses={alert.layer2.belief} />
-        <BeliefMassBars title="Fused (Dempster–Shafer)" masses={alert.fused_belief} />
+        <BeliefMassBars title={t("alert.beliefLayer1")} masses={alert.layer1.belief} />
+        <BeliefMassBars title={t("alert.beliefLayer2")} masses={alert.layer2.belief} />
+        <BeliefMassBars title={t("alert.beliefFused")} masses={alert.fused_belief} />
       </div>
 
-      <Panel title="Investigator narrative">
+      <Panel title={t("alert.narrative")}>
         <p className="text-sm leading-6 text-[var(--fg)]">{alert.causal_chain_text}</p>
       </Panel>
 

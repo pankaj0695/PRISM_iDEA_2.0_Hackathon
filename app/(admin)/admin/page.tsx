@@ -1,12 +1,20 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { Activity, AlertTriangle, Building2, Database, Users } from "lucide-react";
+import { getTranslations } from "next-intl/server";
+import {
+  Activity,
+  AlertTriangle,
+  Building2,
+  Database,
+  Users,
+  GitBranch,
+  Wand2,
+} from "lucide-react";
 import { KpiCard } from "@/components/ub/KpiCard";
 import { Panel } from "@/components/ub/Panel";
 import { AlertList } from "@/components/alerts/AlertList";
 import { SeverityTrend } from "@/components/charts/SeverityTrend";
 import { Button } from "@/components/ub/Button";
-import { COOKIE_NAME } from "@/lib/auth/jwt";
 
 interface Overview {
   collections: {
@@ -44,66 +52,87 @@ function fmt(n: number | undefined) {
 }
 
 export default async function AdminHome() {
+  const t = await getTranslations();
   const o = await fetchOverview();
   const c = o?.collections;
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-semibold text-[var(--fg)]">PRISM Operations Centre</h1>
-          <p className="text-sm text-[var(--fg-muted)]">
-            Live insider-fraud surveillance — alerts fire only when both layers agree.
-          </p>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--ub-blue)]">
+            {t("brand.owner")}
+          </div>
+          <h1 className="text-2xl font-bold text-[var(--fg)]">{t("admin.title")}</h1>
+          <p className="text-sm text-[var(--fg-muted)]">{t("admin.subtitle")}</p>
         </div>
         <div className="flex gap-2">
-          <Link href="/admin/whatif"><Button variant="secondary">What-If simulator</Button></Link>
-          <Link href="/admin/graph"><Button>Open relationship graph</Button></Link>
+          <Link href="/admin/whatif">
+            <Button variant="secondary">
+              <Wand2 className="h-4 w-4" /> {t("admin.openWhatIf")}
+            </Button>
+          </Link>
+          <Link href="/admin/graph">
+            <Button>
+              <GitBranch className="h-4 w-4" /> {t("admin.openGraph")}
+            </Button>
+          </Link>
         </div>
       </div>
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
-          label="Critical alerts"
+          label={t("kpi.criticalAlerts")}
           value={fmt(o?.alerts.by_severity?.CRITICAL)}
-          hint={`Total open: ${fmt(o?.alerts.total)}`}
+          hint={t("kpi.totalOpen", { n: fmt(o?.alerts.total) })}
           accent="red"
           icon={<AlertTriangle className="h-4 w-4" />}
         />
         <KpiCard
-          label="Suspicious events (seeded)"
+          label={t("kpi.suspiciousEvents")}
           value={fmt((o?.suspicious.transactions ?? 0) + (o?.suspicious.activity_logs ?? 0))}
-          hint={`${fmt(o?.suspicious.transactions)} txns · ${fmt(o?.suspicious.activity_logs)} logs`}
+          hint={t("kpi.txnsAndLogs", {
+            tx: fmt(o?.suspicious.transactions),
+            logs: fmt(o?.suspicious.activity_logs),
+          })}
           accent="yellow"
           icon={<Activity className="h-4 w-4" />}
         />
         <KpiCard
-          label="Dormant accounts"
+          label={t("kpi.dormantAccounts")}
           value={fmt(o?.accounts_dormant)}
-          hint="Primary anomaly indicator"
+          hint={t("kpi.dormantHint")}
           accent="blue"
           icon={<Database className="h-4 w-4" />}
         />
         <KpiCard
-          label="Branches monitored"
+          label={t("kpi.branchesMonitored")}
           value={fmt(c?.branches)}
-          hint={`${fmt(c?.employees)} employees · ${fmt(c?.customers)} customers`}
+          hint={t("kpi.branchesHint", {
+            employees: fmt(c?.employees),
+            customers: fmt(c?.customers),
+          })}
           accent="green"
           icon={<Building2 className="h-4 w-4" />}
         />
       </section>
 
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <KpiCard label="Accounts" value={fmt(c?.accounts)} icon={<Database className="h-4 w-4" />} />
-        <KpiCard label="Transactions" value={fmt(c?.transactions)} icon={<Database className="h-4 w-4" />} />
-        <KpiCard label="Activity logs" value={fmt(c?.activity_logs)} icon={<Activity className="h-4 w-4" />} />
-        <KpiCard label="Dependents" value={fmt(c?.dependents)} icon={<Users className="h-4 w-4" />} />
+        <KpiCard label={t("kpi.accounts")} value={fmt(c?.accounts)} icon={<Database className="h-4 w-4" />} />
+        <KpiCard label={t("kpi.transactions")} value={fmt(c?.transactions)} icon={<Database className="h-4 w-4" />} />
+        <KpiCard label={t("kpi.activityLogs")} value={fmt(c?.activity_logs)} icon={<Activity className="h-4 w-4" />} />
+        <KpiCard label={t("kpi.dependents")} value={fmt(c?.dependents)} icon={<Users className="h-4 w-4" />} />
       </section>
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-        <Panel title="Live alert feed" description="SSE-subscribed. New alerts appear instantly.">
+        <Panel
+          eyebrow="LIVE"
+          title={t("feed.liveTitle")}
+          description={t("feed.liveSubtitle")}
+        >
           <AlertList basePath="/admin/alerts" />
         </Panel>
-        <Panel title="Severity trend" description="Daily alert distribution by severity.">
+        <Panel title={t("feed.severityTrend")} description={t("feed.severityTrendSubtitle")}>
           <SeverityTrend />
         </Panel>
       </div>

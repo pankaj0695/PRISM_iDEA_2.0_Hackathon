@@ -1,0 +1,168 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "noRecords": "No records",
+    "signOut": "Sign out",
+    "signedInAs": "Signed in as",
+    "branch": "Branch",
+    "language": "Language",
+    "back": "Back",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "all": "All"
+  },
+  "brand": {
+    "name": "PRISM",
+    "tagline": "Privileged-user Risk Identification & Surveillance Monitoring",
+    "owner": "Union Bank of India",
+    "bannerStrip": "Union Bank of India · iDEA 2.0 Hackathon · Team GangOfFour"
+  },
+  "nav": {
+    "overview": "Overview",
+    "alerts": "Alerts",
+    "graph": "Relationship Graph",
+    "whatIf": "What-If",
+    "queue": "Investigation Queue",
+    "allAlerts": "All Alerts",
+    "myActivity": "My Activity",
+    "disclosure": "Voluntary Disclosure"
+  },
+  "login": {
+    "title": "Sign in",
+    "employeeCode": "Employee code",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "demoAccounts": "Demo accounts (password: prism123)",
+    "demoNote": "Role is auto-derived from each employee's grade and designation.",
+    "demoAdmin": "EMP_00007 — Admin (Assistant General Manager)",
+    "demoManager": "EMP_00001 — Branch Manager",
+    "demoEmployee": "EMP_00050 — Employee (Assistant Manager)",
+    "tagline": "AI-powered early warning for insider fraud — explainable in plain English."
+  },
+  "admin": {
+    "title": "PRISM Operations Centre",
+    "subtitle": "Live insider-fraud surveillance — alerts fire only when both layers agree.",
+    "openGraph": "Open relationship graph",
+    "openWhatIf": "What-If simulator"
+  },
+  "manager": {
+    "title": "Branch Investigation Queue",
+    "subtitle": "Alerts scoped to your branch. You can dismiss, escalate, or recommend account freeze."
+  },
+  "employee": {
+    "welcome": "Welcome, {name}",
+    "subtitle": "PRISM keeps a transparent record of every system action attributed to you. This page is your view of that record.",
+    "recordedTitle": "What PRISM records about you",
+    "recordedBullets": "• Logins, devices and IP addresses for the last 30 days\n• Customer accounts you viewed and transactions you initiated\n• Approvals you granted and any override actions\n• Voluntary disclosures of external accounts you submit",
+    "openActivity": "Open my activity log",
+    "submitDisclosure": "Submit a voluntary disclosure",
+    "activityTitle": "My activity log",
+    "activitySubtitle": "Full transparency over what PRISM records about you.",
+    "trustedDevices": "Trusted devices & IPs",
+    "recentLogins": "Recent logins",
+    "recentActions": "Last 100 actions"
+  },
+  "kpi": {
+    "criticalAlerts": "Critical alerts",
+    "totalOpen": "Total open: {n}",
+    "suspiciousEvents": "Suspicious events (seeded)",
+    "txnsAndLogs": "{tx} txns · {logs} logs",
+    "dormantAccounts": "Dormant accounts",
+    "dormantHint": "Primary anomaly indicator",
+    "branchesMonitored": "Branches monitored",
+    "branchesHint": "{employees} employees · {customers} customers",
+    "accounts": "Accounts",
+    "transactions": "Transactions",
+    "activityLogs": "Activity logs",
+    "dependents": "Dependents",
+    "openAlerts": "Open alerts in branch",
+    "criticalShort": "Critical: {n}",
+    "employees": "Employees",
+    "employeesHint": "Accounts {n}",
+    "recent": "Recent suspicious events",
+    "recentHint": "From the seeded scenarios",
+    "recentActions": "Recent actions (30d)",
+    "devices": "Trusted devices",
+    "disclosures": "Disclosures filed",
+    "disclosuresHint": "Submit at /employee/disclosure"
+  },
+  "feed": {
+    "liveTitle": "Live alert feed",
+    "liveSubtitle": "SSE-subscribed. New alerts appear instantly.",
+    "severityTrend": "Severity trend",
+    "severityTrendSubtitle": "Daily alert distribution by severity.",
+    "empty": "No alerts yet — run npm run seed-alerts to populate the demo feed."
+  },
+  "alert": {
+    "riskScore": "Risk score",
+    "narrative": "Investigator narrative",
+    "causalChain": "Causal chain (SHAP-ordered)",
+    "chainProbability": "Chain probability",
+    "disposition": "Disposition",
+    "status": "Status",
+    "confirmFraud": "Confirm fraud",
+    "escalate": "Escalate",
+    "freezeAccount": "Freeze account",
+    "recommendFreeze": "Recommend freeze",
+    "dismiss": "Dismiss",
+    "working": "Working…",
+    "notesPlaceholder": "Investigation notes / evidence summary…",
+    "beliefLayer1": "Layer 1 — Graph",
+    "beliefLayer2": "Layer 2 — Anomaly",
+    "beliefFused": "Fused (Dempster–Shafer)",
+    "beliefSum": "m(Fraud + Legit + Uncertain) = 1",
+    "fraud": "Fraud",
+    "uncertain": "Uncertain",
+    "legitimate": "Legitimate"
+  },
+  "severity": {
+    "CRITICAL": "Critical",
+    "HIGH": "High",
+    "WATCH": "Watch",
+    "CLEAR": "Clear"
+  },
+  "whatIf": {
+    "title": "What-If Simulator",
+    "subtitle": "Pose a hypothetical action and see the risk score it would produce — useful for calibrating thresholds and tabletop exercises.",
+    "inputsTitle": "What-If inputs",
+    "inputsSubtitle": "Pose a hypothetical action — no alert is persisted.",
+    "resultTitle": "Simulation result",
+    "resultSubtitle": "Mock detector. Drop in real ML by setting DETECTOR=fastapi in .env.",
+    "employeeId": "Employee ID",
+    "eventType": "Event type",
+    "amount": "Amount (₹)",
+    "accountId": "Account ID (optional)",
+    "run": "Run simulation",
+    "running": "Scoring…",
+    "placeholder": "Enter inputs and click Run simulation."
+  },
+  "graph": {
+    "title": "Relationship & beneficiary network",
+    "subtitle": "Graph view used by Layer 1 — dependents, employee accounts, managed customers and the counterparty accounts they transact with.",
+    "employeeId": "Employee ID",
+    "load": "Load",
+    "legend": {
+      "employee": "Employee",
+      "dependent": "Dependent",
+      "customer": "Customer",
+      "account": "Account",
+      "branch": "Branch"
+    }
+  },
+  "disclosure": {
+    "title": "Voluntary Disclosure",
+    "subtitle": "As suggested by Ms. A. Manimekhalai — proactively disclose any external bank accounts you hold or operate. This reduces the chance of a false-positive flag against you later.",
+    "formTitle": "Disclose an external account",
+    "bankName": "External bank name",
+    "accountNumber": "External account number",
+    "ifsc": "IFSC (if known)",
+    "relationship": "Holder relationship",
+    "balance": "Declared balance (₹)",
+    "reason": "Reason / context",
+    "submit": "Submit disclosure",
+    "submitting": "Submitting…",
+    "submitted": "Submitted. Reference: {id}"
+  }
+}

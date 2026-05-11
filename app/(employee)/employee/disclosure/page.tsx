@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Panel } from "@/components/ub/Panel";
 import { Button } from "@/components/ub/Button";
 
 export default function DisclosurePage() {
+  const t = useTranslations();
   const [form, setForm] = useState({
     external_bank_name: "",
     external_account_number: "",
@@ -32,7 +34,9 @@ export default function DisclosurePage() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           ...form,
-          declared_balance_inr: form.declared_balance_inr ? Number(form.declared_balance_inr) : undefined,
+          declared_balance_inr: form.declared_balance_inr
+            ? Number(form.declared_balance_inr)
+            : undefined,
         }),
       });
       const data = await r.json();
@@ -56,25 +60,40 @@ export default function DisclosurePage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-xl font-semibold text-[var(--fg)]">Voluntary disclosure</h1>
-        <p className="text-sm text-[var(--fg-muted)]">
-          As suggested by Ms. A. Manimekhalai — proactively disclose any external bank accounts you
-          hold or operate. This reduces the chance of a false-positive flag against you later.
-        </p>
+        <h1 className="text-xl font-bold text-[var(--fg)]">{t("disclosure.title")}</h1>
+        <p className="text-sm text-[var(--fg-muted)]">{t("disclosure.subtitle")}</p>
       </div>
-      <Panel title="Disclose an external account">
+      <Panel title={t("disclosure.formTitle")}>
         <form onSubmit={submit} className="grid gap-3 sm:grid-cols-2">
-          <Field label="External bank name">
-            <input className="input" required value={form.external_bank_name} onChange={(e) => up("external_bank_name", e.target.value)} />
+          <Field label={t("disclosure.bankName")}>
+            <input
+              className="ub-input"
+              required
+              value={form.external_bank_name}
+              onChange={(e) => up("external_bank_name", e.target.value)}
+            />
           </Field>
-          <Field label="External account number">
-            <input className="input" required value={form.external_account_number} onChange={(e) => up("external_account_number", e.target.value)} />
+          <Field label={t("disclosure.accountNumber")}>
+            <input
+              className="ub-input"
+              required
+              value={form.external_account_number}
+              onChange={(e) => up("external_account_number", e.target.value)}
+            />
           </Field>
-          <Field label="IFSC (if known)">
-            <input className="input" value={form.ifsc_code} onChange={(e) => up("ifsc_code", e.target.value)} />
+          <Field label={t("disclosure.ifsc")}>
+            <input
+              className="ub-input"
+              value={form.ifsc_code}
+              onChange={(e) => up("ifsc_code", e.target.value)}
+            />
           </Field>
-          <Field label="Holder relationship">
-            <select className="input" value={form.account_holder_relationship} onChange={(e) => up("account_holder_relationship", e.target.value)}>
+          <Field label={t("disclosure.relationship")}>
+            <select
+              className="ub-input"
+              value={form.account_holder_relationship}
+              onChange={(e) => up("account_holder_relationship", e.target.value)}
+            >
               <option>Self</option>
               <option>Spouse</option>
               <option>Parent</option>
@@ -83,36 +102,50 @@ export default function DisclosurePage() {
               <option>Joint with non-family</option>
             </select>
           </Field>
-          <Field label="Declared balance (₹)">
-            <input className="input" type="number" min={0} value={form.declared_balance_inr} onChange={(e) => up("declared_balance_inr", e.target.value)} />
+          <Field label={t("disclosure.balance")}>
+            <input
+              className="ub-input"
+              type="number"
+              min={0}
+              value={form.declared_balance_inr}
+              onChange={(e) => up("declared_balance_inr", e.target.value)}
+            />
           </Field>
-          <Field label="Reason / context" wide>
-            <textarea className="input" required rows={3} value={form.reason} onChange={(e) => up("reason", e.target.value)} />
+          <Field label={t("disclosure.reason")} wide>
+            <textarea
+              className="ub-input"
+              required
+              rows={3}
+              value={form.reason}
+              onChange={(e) => up("reason", e.target.value)}
+            />
           </Field>
           <div className="sm:col-span-2">
-            <Button type="submit" disabled={busy}>
-              {busy ? "Submitting…" : "Submit disclosure"}
+            <Button type="submit" disabled={busy} size="lg">
+              {busy ? t("disclosure.submitting") : t("disclosure.submit")}
             </Button>
             {done && (
-              <span className="ml-3 text-sm text-[var(--clear)]">
-                Submitted. Reference: <span className="font-mono">{done}</span>
+              <span className="ml-3 text-sm text-[var(--sev-clear)]">
+                {t("disclosure.submitted", { id: done })}
               </span>
             )}
-            {error && <span className="ml-3 text-sm text-[var(--critical)]">{error}</span>}
+            {error && <span className="ml-3 text-sm text-[var(--sev-critical)]">{error}</span>}
           </div>
         </form>
         <style jsx>{`
-          .input {
+          .ub-input {
             width: 100%;
             border: 1px solid var(--border-strong);
             border-radius: 6px;
-            padding: 6px 8px;
+            padding: 7px 9px;
             font-size: 13px;
             background: white;
+            transition: border-color 0.15s, box-shadow 0.15s;
           }
-          .input:focus {
+          .ub-input:focus {
             outline: none;
             border-color: var(--ub-blue);
+            box-shadow: 0 0 0 2px var(--ring);
           }
         `}</style>
       </Panel>

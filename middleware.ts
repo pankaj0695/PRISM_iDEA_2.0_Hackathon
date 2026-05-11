@@ -2,7 +2,13 @@ import { NextResponse, type NextRequest } from "next/server";
 import { COOKIE_NAME, verifyToken } from "@/lib/auth/jwt";
 import { homeForRole } from "@/lib/auth/rbac";
 
-const PUBLIC_PATHS = ["/login", "/api/auth/login", "/api/auth/logout", "/api/auth/me"];
+const PUBLIC_PATHS = [
+  "/login",
+  "/api/auth/login",
+  "/api/auth/logout",
+  "/api/auth/me",
+  "/api/locale", // language switcher works before sign-in
+];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;

@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ChevronDown, LogOut, Shield } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { ChevronDown, LogOut, ShieldCheck } from "lucide-react";
+import clsx from "clsx";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 
 interface MeUser {
   employee_id: string;
@@ -14,16 +17,23 @@ interface MeUser {
   branch_id: string;
 }
 
+interface NavItem {
+  href: string;
+  labelKey: string; // i18n key, e.g. "nav.overview"
+}
+
 export function UnionBankHeader({
   homeHref,
   navItems,
 }: {
   homeHref: string;
-  navItems: { href: string; label: string }[];
+  navItems: NavItem[];
 }) {
+  const t = useTranslations();
   const [user, setUser] = useState<MeUser | null>(null);
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     fetch("/api/auth/me", { credentials: "include" })
@@ -37,73 +47,130 @@ export function UnionBankHeader({
     router.push("/login");
   }
 
+  const initials = (user?.name || "??")
+    .split(" ")
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
   return (
     <header className="sticky top-0 z-30">
-      {/* UB red strip */}
-      <div className="h-1.5 bg-[var(--ub-red)]" />
-      {/* UB blue band */}
-      <div className="bg-[var(--ub-blue)] text-white">
-        <div className="mx-auto flex h-16 max-w-[1400px] items-center px-6">
+      {/* Tri-colour strip — Union Bank flag accent (red / yellow / blue) */}
+      <div className="ub-divider" />
+
+      {/* Brand row — white, with Union Bank Hindi/English lockup */}
+      <div className="border-b border-[var(--border)] bg-white">
+        <div className="mx-auto flex h-16 max-w-[1400px] items-center gap-4 px-6">
           <Link href={homeHref} className="flex items-center gap-3">
-            <span className="rounded-full bg-white p-1.5 shadow-sm">
-              <Image src="/PRISM_logo.png" alt="PRISM" width={32} height={32} className="rounded-full object-contain" />
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-white ring-1 ring-[var(--border)]">
+              <Image
+                src="/PRISM_logo.png"
+                alt="PRISM"
+                width={32}
+                height={32}
+                className="rounded-full object-contain"
+              />
             </span>
-            <div className="leading-tight">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/70">Union Bank of India</div>
-              <div className="text-lg font-semibold">PRISM</div>
-            </div>
+            <span className="leading-tight">
+              <span className="block text-[15px] font-bold text-[var(--ub-red)]">
+                यूनियन बैंक
+              </span>
+              <span className="block text-[13px] font-semibold text-[var(--ub-blue)]">
+                Union Bank of India
+              </span>
+            </span>
+            <span className="mx-3 h-9 w-px bg-[var(--border-strong)]" />
+            <span className="leading-tight">
+              <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--fg-muted)]">
+                {t("brand.tagline")}
+              </span>
+              <span className="block text-base font-bold text-[var(--fg)]">
+                PRISM
+              </span>
+            </span>
           </Link>
 
-          <nav className="ml-10 hidden gap-1 md:flex">
-            {navItems.map((it) => (
-              <Link
-                key={it.href}
-                href={it.href}
-                className="rounded-md px-3 py-2 text-sm font-medium text-white/85 hover:bg-white/10 hover:text-white"
-              >
-                {it.label}
-              </Link>
-            ))}
-          </nav>
+          <span className="ml-3 hidden items-center gap-1.5 rounded-full bg-[var(--ub-blue-50)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--ub-blue)] lg:inline-flex">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            Insider Fraud Early Warning
+          </span>
 
-          <div className="ml-auto flex items-center gap-3">
-            <span className="hidden items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-white/90 md:inline-flex">
-              <Shield className="h-3.5 w-3.5" />
-              Insider Fraud Early Warning
-            </span>
+          <div className="ml-auto flex items-center gap-2">
+            <div className="hidden rounded-full bg-[var(--ub-blue)] p-0.5 md:block">
+              <LanguageSwitcher compact />
+            </div>
             <div className="relative">
               <button
                 onClick={() => setOpen((v) => !v)}
-                className="flex items-center gap-2 rounded-md bg-white/10 px-3 py-1.5 text-sm text-white hover:bg-white/15"
+                className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-2 py-1.5 text-sm shadow-sm hover:bg-[var(--bg-soft)]"
               >
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-[var(--ub-red)] text-xs font-semibold">
-                  {(user?.name || "??").split(" ").map((p) => p[0]).slice(0, 2).join("")}
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-[var(--ub-red)] text-xs font-semibold text-white">
+                  {initials}
                 </span>
-                <div className="text-left leading-tight">
-                  <div className="text-[11px] text-white/70">{user?.role || "—"}</div>
-                  <div className="text-sm font-medium">{user?.name || "Loading…"}</div>
-                </div>
-                <ChevronDown className="h-4 w-4 opacity-70" />
+                <span className="hidden text-left leading-tight md:block">
+                  <span className="block text-[10px] uppercase tracking-wider text-[var(--fg-muted)]">
+                    {user?.role || "—"}
+                  </span>
+                  <span className="block text-[13px] font-semibold text-[var(--fg)]">
+                    {user?.name || t("common.loading")}
+                  </span>
+                </span>
+                <ChevronDown className="h-4 w-4 text-[var(--fg-muted)]" />
               </button>
               {open && (
-                <div className="absolute right-0 mt-2 w-56 overflow-hidden rounded-md border border-black/10 bg-white text-[var(--fg)] shadow-lg">
-                  <div className="px-3 py-2 text-xs text-[var(--fg-muted)]">
-                    Signed in as
-                    <div className="text-sm font-medium text-[var(--fg)]">{user?.employee_code}</div>
-                    <div className="text-xs">Branch {user?.branch_id}</div>
+                <>
+                  <div className="fixed inset-0 z-30" onClick={() => setOpen(false)} />
+                  <div className="absolute right-0 z-40 mt-2 w-60 overflow-hidden rounded-lg border border-black/10 bg-white shadow-xl">
+                    <div className="bg-[var(--ub-blue)] px-3 py-3 text-white">
+                      <div className="text-[10px] uppercase tracking-wider opacity-80">
+                        {t("common.signedInAs")}
+                      </div>
+                      <div className="mt-0.5 text-sm font-semibold">{user?.name}</div>
+                      <div className="text-[11px] opacity-90">
+                        {user?.employee_code} · {t("common.branch")} {user?.branch_id}
+                      </div>
+                    </div>
+                    <button
+                      onClick={logout}
+                      className="flex w-full items-center gap-2 px-3 py-2.5 text-sm hover:bg-[var(--bg-muted)]"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      {t("common.signOut")}
+                    </button>
                   </div>
-                  <button
-                    onClick={logout}
-                    className="flex w-full items-center gap-2 border-t border-black/5 px-3 py-2 text-sm hover:bg-[var(--bg-muted)]"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    Sign out
-                  </button>
-                </div>
+                </>
               )}
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Deep-blue nav band */}
+      <div className="ub-grad-blue">
+        <nav className="mx-auto flex h-11 max-w-[1400px] items-center gap-1 px-6">
+          {navItems.map((it) => {
+            const active =
+              pathname === it.href ||
+              (it.href !== "/" && pathname?.startsWith(it.href + "/"));
+            return (
+              <Link
+                key={it.href}
+                href={it.href}
+                className={clsx(
+                  "rounded-md px-3 py-1.5 text-[13px] font-medium transition",
+                  active
+                    ? "bg-white/15 text-white"
+                    : "text-white/85 hover:bg-white/10 hover:text-white",
+                )}
+              >
+                {/* next-intl typings don't know the dynamic key, but it's safe */}
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {(t as any)(it.labelKey)}
+              </Link>
+            );
+          })}
+        </nav>
       </div>
     </header>
   );

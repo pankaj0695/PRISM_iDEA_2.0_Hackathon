@@ -1,27 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  /* Union Bank of India palette */
+  /* Union Bank of India palette — sampled from the official site */
   --ub-red: #e30613;
   --ub-red-dark: #b50410;
-  --ub-red-50: #fef2f3;
+  --ub-red-50: #fff1f2;
+  --ub-red-100: #ffe1e3;
   --ub-blue: #003b71;
   --ub-blue-dark: #002a52;
+  --ub-blue-700: #08487f;
   --ub-blue-50: #eef4fb;
+  --ub-blue-100: #d9e6f3;
   --ub-yellow: #ffb81c;
 
   --bg: #ffffff;
-  --bg-soft: #f6f8fb;
+  --bg-soft: #f5f7fb;
   --bg-muted: #eef1f5;
-  --fg: #0f172a;
-  --fg-muted: #475569;
+  --bg-card: #ffffff;
+  --fg: #0a1f3a;
+  --fg-soft: #1f2d44;
+  --fg-muted: #5a6a82;
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
+  --ring: rgba(0, 59, 113, 0.25);
 
-  --critical: #b91c1c;
-  --high: #ea580c;
-  --watch: #ca8a04;
-  --clear: #15803d;
+  --sev-critical: #b91c1c;
+  --sev-critical-50: #fee2e2;
+  --sev-high: #ea580c;
+  --sev-high-50: #ffedd5;
+  --sev-watch: #ca8a04;
+  --sev-watch-50: #fef3c7;
+  --sev-clear: #15803d;
+  --sev-clear-50: #dcfce7;
+
+  --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 1px 8px rgba(15, 23, 42, 0.04);
+  --shadow-pop: 0 4px 14px rgba(15, 23, 42, 0.08),
+    0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-elevated: 0 10px 30px rgba(0, 59, 113, 0.12),
+    0 2px 6px rgba(0, 59, 113, 0.08);
+
+  --grad-blue: linear-gradient(135deg, #003b71 0%, #08487f 60%, #0d5fa5 100%);
+  --grad-red: linear-gradient(135deg, #c80513 0%, #e30613 100%);
+  --grad-hero: linear-gradient(
+    135deg,
+    rgba(0, 59, 113, 0.97) 0%,
+    rgba(0, 42, 82, 0.97) 60%,
+    rgba(227, 6, 19, 0.92) 100%
+  );
 }
 
 @theme inline {
@@ -30,32 +56,42 @@
   --color-ub-red: var(--ub-red);
   --color-ub-red-dark: var(--ub-red-dark);
   --color-ub-red-50: var(--ub-red-50);
+  --color-ub-red-100: var(--ub-red-100);
   --color-ub-blue: var(--ub-blue);
   --color-ub-blue-dark: var(--ub-blue-dark);
+  --color-ub-blue-700: var(--ub-blue-700);
   --color-ub-blue-50: var(--ub-blue-50);
+  --color-ub-blue-100: var(--ub-blue-100);
   --color-ub-yellow: var(--ub-yellow);
   --color-bg-soft: var(--bg-soft);
   --color-bg-muted: var(--bg-muted);
+  --color-bg-card: var(--bg-card);
+  --color-fg-soft: var(--fg-soft);
   --color-fg-muted: var(--fg-muted);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-  --color-sev-critical: var(--critical);
-  --color-sev-high: var(--high);
-  --color-sev-watch: var(--watch);
-  --color-sev-clear: var(--clear);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --color-sev-critical: var(--sev-critical);
+  --color-sev-high: var(--sev-high);
+  --color-sev-watch: var(--sev-watch);
+  --color-sev-clear: var(--sev-clear);
+  --font-sans: var(--font-inter), var(--font-devanagari), ui-sans-serif,
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
 }
 
 html,
 body {
-  background: var(--bg);
+  background: var(--bg-soft);
   color: var(--fg);
 }
 
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(at 12% -10%, rgba(0, 59, 113, 0.06) 0px, transparent 50%),
+    radial-gradient(at 92% 0%, rgba(227, 6, 19, 0.05) 0px, transparent 45%);
+  background-attachment: fixed;
 }
 
 .scrollbar-thin::-webkit-scrollbar {
@@ -65,4 +101,55 @@ body {
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: var(--border-strong);
   border-radius: 8px;
+}
+
+/* Utility helpers used across the app */
+.ub-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+}
+.ub-card-elevated {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-pop);
+}
+.ub-grad-blue {
+  background: var(--grad-blue);
+}
+.ub-grad-red {
+  background: var(--grad-red);
+}
+.ub-grad-hero {
+  background: var(--grad-hero);
+}
+.ub-divider {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--ub-red) 0%,
+    var(--ub-red) 33%,
+    var(--ub-yellow) 33%,
+    var(--ub-yellow) 66%,
+    var(--ub-blue) 66%,
+    var(--ub-blue) 100%
+  );
+}
+
+@keyframes ub-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.92); }
+}
+.ub-pulse {
+  animation: ub-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes ub-slide-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ub-anim-in {
+  animation: ub-slide-in 240ms ease-out;
 }

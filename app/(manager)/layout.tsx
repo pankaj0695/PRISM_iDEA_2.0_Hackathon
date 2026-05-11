@@ -6,9 +6,9 @@ export default function ManagerLayout({ children }: { children: React.ReactNode 
       <UnionBankHeader
         homeHref="/manager"
         navItems={[
-          { href: "/manager", label: "Queue" },
-          { href: "/manager/alerts", label: "All alerts" },
-          { href: "/manager/whatif", label: "What-If" },
+          { href: "/manager", labelKey: "nav.queue" },
+          { href: "/manager/alerts", labelKey: "nav.allAlerts" },
+          { href: "/manager/whatif", labelKey: "nav.whatIf" },
         ]}
       />
       <main className="mx-auto max-w-[1400px] px-6 py-6">{children}</main>

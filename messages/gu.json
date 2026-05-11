@@ -1,0 +1,168 @@
+{
+  "common": {
+    "loading": "લોડ થઈ રહ્યું છે…",
+    "noRecords": "કોઈ રેકોર્ડ નથી",
+    "signOut": "સાઇન આઉટ",
+    "signedInAs": "આ રીતે સાઇન ઇન છો",
+    "branch": "શાખા",
+    "language": "ભાષા",
+    "back": "પાછળ",
+    "submit": "સબમિટ",
+    "cancel": "રદ કરો",
+    "save": "સાચવો",
+    "all": "બધા"
+  },
+  "brand": {
+    "name": "PRISM",
+    "tagline": "વિશેષાધિકાર-પ્રાપ્ત વપરાશકર્તા જોખમ ઓળખ અને દેખરેખ",
+    "owner": "યુનિયન બેંક ઓફ ઈન્ડિયા",
+    "bannerStrip": "યુનિયન બેંક ઓફ ઈન્ડિયા · iDEA 2.0 હેકાથોન · ટીમ GangOfFour"
+  },
+  "nav": {
+    "overview": "વિહંગાવલોકન",
+    "alerts": "ચેતવણીઓ",
+    "graph": "સંબંધ ગ્રાફ",
+    "whatIf": "જો-તો",
+    "queue": "તપાસ કતાર",
+    "allAlerts": "બધી ચેતવણીઓ",
+    "myActivity": "મારી પ્રવૃત્તિ",
+    "disclosure": "સ્વૈચ્છિક જાહેરાત"
+  },
+  "login": {
+    "title": "સાઇન ઇન કરો",
+    "employeeCode": "કર્મચારી કોડ",
+    "password": "પાસવર્ડ",
+    "signIn": "સાઇન ઇન",
+    "signingIn": "સાઇન ઇન થઈ રહ્યું છે…",
+    "demoAccounts": "ડેમો ખાતા (પાસવર્ડ: prism123)",
+    "demoNote": "ભૂમિકા કર્મચારીના ગ્રેડ અને હોદ્દાથી આપોઆપ નક્કી થાય છે.",
+    "demoAdmin": "EMP_00007 — એડમિન (સહાયક જનરલ મેનેજર)",
+    "demoManager": "EMP_00001 — શાખા મેનેજર",
+    "demoEmployee": "EMP_00050 — કર્મચારી (સહાયક મેનેજર)",
+    "tagline": "આંતરિક છેતરપિંડી માટે AI-આધારિત પૂર્વ-ચેતવણી — સરળ ભાષામાં સમજાવી શકાય તેવી."
+  },
+  "admin": {
+    "title": "PRISM સંચાલન કેન્દ્ર",
+    "subtitle": "જીવંત આંતરિક છેતરપિંડી દેખરેખ — બંને સ્તરો સંમત થાય ત્યારે જ ચેતવણીઓ બહાર પડે છે.",
+    "openGraph": "સંબંધ ગ્રાફ ખોલો",
+    "openWhatIf": "જો-તો સિમ્યુલેટર"
+  },
+  "manager": {
+    "title": "શાખા તપાસ કતાર",
+    "subtitle": "ફક્ત તમારી શાખાની ચેતવણીઓ. તમે રદ, વધારી, અથવા ખાતું સ્થગિત કરવાની ભલામણ કરી શકો છો."
+  },
+  "employee": {
+    "welcome": "સ્વાગત છે, {name}",
+    "subtitle": "PRISM તમારી સાથે જોડાયેલી દરેક સિસ્ટમ ક્રિયાનું પારદર્શી રેકોર્ડ રાખે છે.",
+    "recordedTitle": "PRISM તમારા વિશે શું રેકોર્ડ કરે છે",
+    "recordedBullets": "• છેલ્લા 30 દિવસના લોગિન, ઉપકરણો અને IP\n• તમે જોયેલા ગ્રાહક ખાતા અને શરૂ કરેલા વ્યવહારો\n• તમારી મંજૂરીઓ અને કોઈપણ ઓવરરાઇડ\n• બાહ્ય ખાતાઓની સ્વૈચ્છિક જાહેરાત",
+    "openActivity": "મારી પ્રવૃત્તિ લોગ ખોલો",
+    "submitDisclosure": "સ્વૈચ્છિક જાહેરાત સબમિટ કરો",
+    "activityTitle": "મારી પ્રવૃત્તિ લોગ",
+    "activitySubtitle": "PRISM તમારા વિશે રેકોર્ડ કરે છે તેના પર સંપૂર્ણ પારદર્શિતા.",
+    "trustedDevices": "વિશ્વસનીય ઉપકરણો અને IP",
+    "recentLogins": "તાજેતરના લોગિન",
+    "recentActions": "છેલ્લી 100 ક્રિયાઓ"
+  },
+  "kpi": {
+    "criticalAlerts": "ગંભીર ચેતવણીઓ",
+    "totalOpen": "કુલ ખુલ્લા: {n}",
+    "suspiciousEvents": "શંકાસ્પદ ઘટનાઓ (સીડેડ)",
+    "txnsAndLogs": "{tx} વ્યવહાર · {logs} લોગ",
+    "dormantAccounts": "નિષ્ક્રિય ખાતા",
+    "dormantHint": "પ્રાથમિક અસામાન્યતા સૂચક",
+    "branchesMonitored": "દેખરેખ હેઠળ શાખાઓ",
+    "branchesHint": "{employees} કર્મચારી · {customers} ગ્રાહક",
+    "accounts": "ખાતા",
+    "transactions": "વ્યવહાર",
+    "activityLogs": "પ્રવૃત્તિ લોગ",
+    "dependents": "આશ્રિતો",
+    "openAlerts": "શાખામાં ખુલ્લી ચેતવણીઓ",
+    "criticalShort": "ગંભીર: {n}",
+    "employees": "કર્મચારી",
+    "employeesHint": "ખાતા {n}",
+    "recent": "તાજેતરની શંકાસ્પદ ઘટનાઓ",
+    "recentHint": "સીડેડ દૃશ્યોમાંથી",
+    "recentActions": "તાજેતરની ક્રિયાઓ (30 દિવસ)",
+    "devices": "વિશ્વસનીય ઉપકરણો",
+    "disclosures": "સબમિટ કરેલી જાહેરાતો",
+    "disclosuresHint": "/employee/disclosure પર સબમિટ કરો"
+  },
+  "feed": {
+    "liveTitle": "જીવંત ચેતવણી ફીડ",
+    "liveSubtitle": "SSE-સબ્સ્ક્રાઇબ. નવી ચેતવણીઓ તરત જ દેખાય છે.",
+    "severityTrend": "ગંભીરતા વલણ",
+    "severityTrendSubtitle": "ગંભીરતા મુજબ દૈનિક ચેતવણી વિતરણ.",
+    "empty": "હજુ સુધી કોઈ ચેતવણી નથી — ડેમો ફીડ માટે npm run seed-alerts ચલાવો."
+  },
+  "alert": {
+    "riskScore": "જોખમ સ્કોર",
+    "narrative": "તપાસકર્તા કથન",
+    "causalChain": "કારણ-સાંકળ (SHAP-ક્રમ)",
+    "chainProbability": "સાંકળ સંભાવના",
+    "disposition": "નિર્ણય",
+    "status": "સ્થિતિ",
+    "confirmFraud": "છેતરપિંડી પુષ્ટિ",
+    "escalate": "વધારો",
+    "freezeAccount": "ખાતું સ્થગિત કરો",
+    "recommendFreeze": "સ્થગિતની ભલામણ",
+    "dismiss": "રદ કરો",
+    "working": "ચાલી રહ્યું છે…",
+    "notesPlaceholder": "તપાસ નોંધ / પુરાવો સારાંશ…",
+    "beliefLayer1": "સ્તર 1 — ગ્રાફ",
+    "beliefLayer2": "સ્તર 2 — અસામાન્યતા",
+    "beliefFused": "મિશ્રિત (ડેમ્પસ્ટર–શેફર)",
+    "beliefSum": "m(છેતરપિંડી + કાયદેસર + અનિશ્ચિત) = 1",
+    "fraud": "છેતરપિંડી",
+    "uncertain": "અનિશ્ચિત",
+    "legitimate": "કાયદેસર"
+  },
+  "severity": {
+    "CRITICAL": "ગંભીર",
+    "HIGH": "ઉચ્ચ",
+    "WATCH": "દેખરેખ",
+    "CLEAR": "સ્પષ્ટ"
+  },
+  "whatIf": {
+    "title": "જો-તો સિમ્યુલેટર",
+    "subtitle": "એક કાલ્પનિક ક્રિયા સૂચવો અને તેનો સંભવિત જોખમ સ્કોર જુઓ.",
+    "inputsTitle": "જો-તો ઇનપુટ્સ",
+    "inputsSubtitle": "કાલ્પનિક ક્રિયા — કોઈ ચેતવણી સંગ્રહિત થતી નથી.",
+    "resultTitle": "સિમ્યુલેશન પરિણામ",
+    "resultSubtitle": "મોક ડિટેક્ટર. .env માં DETECTOR=fastapi સેટ કરી અસલી ML ઉમેરો.",
+    "employeeId": "કર્મચારી ID",
+    "eventType": "ઘટના પ્રકાર",
+    "amount": "રકમ (₹)",
+    "accountId": "ખાતું ID (વૈકલ્પિક)",
+    "run": "સિમ્યુલેશન ચલાવો",
+    "running": "સ્કોરિંગ…",
+    "placeholder": "ઇનપુટ્સ દાખલ કરો અને સિમ્યુલેશન ચલાવો ક્લિક કરો."
+  },
+  "graph": {
+    "title": "સંબંધ અને લાભાર્થી નેટવર્ક",
+    "subtitle": "સ્તર 1 દ્વારા વપરાતો ગ્રાફ — આશ્રિતો, કર્મચારી ખાતા, સંચાલિત ગ્રાહકો અને પ્રતિ-પક્ષ ખાતા.",
+    "employeeId": "કર્મચારી ID",
+    "load": "લોડ",
+    "legend": {
+      "employee": "કર્મચારી",
+      "dependent": "આશ્રિત",
+      "customer": "ગ્રાહક",
+      "account": "ખાતું",
+      "branch": "શાખા"
+    }
+  },
+  "disclosure": {
+    "title": "સ્વૈચ્છિક જાહેરાત",
+    "subtitle": "શ્રીમતી એ. મણિમેખલાઈની સૂચના મુજબ — તમે રાખેલા અથવા સંચાલિત બાહ્ય બેંક ખાતાઓને સક્રિય રીતે જાહેર કરો.",
+    "formTitle": "બાહ્ય ખાતું જાહેર કરો",
+    "bankName": "બાહ્ય બેંકનું નામ",
+    "accountNumber": "બાહ્ય ખાતા નંબર",
+    "ifsc": "IFSC (જો જાણીતું હોય)",
+    "relationship": "ધારકનો સંબંધ",
+    "balance": "જાહેર બેલેન્સ (₹)",
+    "reason": "કારણ / સંદર્ભ",
+    "submit": "જાહેરાત સબમિટ કરો",
+    "submitting": "સબમિટ થઈ રહ્યું છે…",
+    "submitted": "સબમિટ થયું. સંદર્ભ: {id}"
+  }
+}

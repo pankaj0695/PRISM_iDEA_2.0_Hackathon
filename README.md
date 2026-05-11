@@ -30,16 +30,38 @@ npm run seed-alerts -- --reset # drop existing alerts first
 ## Demo logins
 
 All accounts use password `prism123`. Role is auto-derived from the employee's
-`role_category` / `designation` in MongoDB.
+grade and designation (see `lib/auth/rbac.ts`).
 
-| Employee code | Role likely derived       | Lands on   |
-|---------------|---------------------------|------------|
-| `EMP_00001`   | ADMIN / FRAUD_ANALYST     | `/admin`   |
-| `EMP_00007`   | BRANCH_MANAGER            | `/manager` |
-| `EMP_00050`   | EMPLOYEE                  | `/employee`|
+| Employee code | Real designation                          | Derived role     | Lands on    |
+|---------------|-------------------------------------------|------------------|-------------|
+| `EMP_00007`   | Assistant General Manager — Operations    | `ADMIN`          | `/admin`    |
+| `EMP_00001`   | Branch Manager (Scale-III)                | `BRANCH_MANAGER` | `/manager`  |
+| `EMP_00050`   | Assistant Manager (Scale-II)              | `EMPLOYEE`       | `/employee` |
 
-You can sign in as any of the 400 seeded employees; their role is derived from their
-`role_category` field. The login page has clickable demo accounts.
+You can sign in as any of the 400 seeded employees by employee_id (`EMP_00123`) or
+employee_code (`UBI/MUM/0234`). The login page has clickable demo accounts.
+
+## Multilingual UI
+
+The chrome is translated into ten Indian languages via `next-intl` with
+hand-written messages under `messages/`:
+
+| Code | Language | Native |
+|------|----------|--------|
+| `en` | English | English |
+| `hi` | Hindi | हिन्दी |
+| `bn` | Bengali | বাংলা |
+| `te` | Telugu | తెలుగు |
+| `mr` | Marathi | मराठी |
+| `ta` | Tamil | தமிழ் |
+| `ur` | Urdu | اُردُو (RTL) |
+| `gu` | Gujarati | ગુજરાતી |
+| `kn` | Kannada | ಕನ್ನಡ |
+| `ml` | Malayalam | മലയാളം |
+
+Switch language from the globe icon in the header. Selection persists in a
+`prism_locale` cookie. To extend: add a `messages/<code>.json` file (copy
+`en.json` as the template) and register the code in `lib/i18n/locales.ts`.
 
 ## Architecture
 
