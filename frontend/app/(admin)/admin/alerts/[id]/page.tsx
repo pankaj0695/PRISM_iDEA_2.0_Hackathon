@@ -11,16 +11,20 @@ import { CausalChain } from "@/components/alerts/CausalChain";
 import { AlertActions } from "@/components/alerts/AlertActions";
 import { COOKIE_NAME, verifyToken } from "@/lib/auth/jwt";
 import type { Alert, Branch, Employee } from "@/lib/db/schemas";
+import { getBaseUrl } from "@/lib/api/base-url";
 
 async function fetchAlert(
   id: string,
 ): Promise<{ alert: Alert; employee: Employee | null; branch: Branch | null } | null> {
   const jar = await cookies();
   const cookie = jar.toString();
-  const base = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const r = await fetch(`${base}/api/alerts/${id}`, { headers: { cookie }, cache: "no-store" });
-  if (!r.ok) return null;
-  return r.json();
+  try {
+    const r = await fetch(`${getBaseUrl()}/api/alerts/${id}`, { headers: { cookie }, cache: "no-store" });
+    if (!r.ok) return null;
+    return r.json();
+  } catch {
+    return null;
+  }
 }
 
 export default async function AlertDetailPage({ params }: { params: Promise<{ id: string }> }) {

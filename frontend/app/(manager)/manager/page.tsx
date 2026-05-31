@@ -4,13 +4,21 @@ import { AlertTriangle, Building2, Database } from "lucide-react";
 import { AlertList } from "@/components/alerts/AlertList";
 import { KpiCard } from "@/components/ub/KpiCard";
 import { Panel } from "@/components/ub/Panel";
+import { getBaseUrl } from "@/lib/api/base-url";
 
 async function fetchOverview() {
   const jar = await cookies();
   const cookie = jar.toString();
-  const base = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const r = await fetch(`${base}/api/stats/overview`, { headers: { cookie }, cache: "no-store" });
-  return r.ok ? r.json() : null;
+  try {
+    const r = await fetch(`${getBaseUrl()}/api/stats/overview`, {
+      headers: { cookie },
+      cache: "no-store",
+    });
+    if (!r.ok) return null;
+    return r.json();
+  } catch {
+    return null;
+  }
 }
 
 function fmt(n: number | undefined) {
@@ -27,15 +35,21 @@ export default async function ManagerHome() {
         <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--ub-blue)]">
           {t("brand.owner")}
         </div>
-        <h1 className="text-2xl font-bold text-[var(--fg)]">{t("manager.title")}</h1>
-        <p className="text-sm text-[var(--fg-muted)]">{t("manager.subtitle")}</p>
+        <h1 className="text-2xl font-bold text-[var(--fg)]">
+          {t("manager.title")}
+        </h1>
+        <p className="text-sm text-[var(--fg-muted)]">
+          {t("manager.subtitle")}
+        </p>
       </div>
 
       <section className="grid gap-3 sm:grid-cols-3">
         <KpiCard
           label={t("kpi.openAlerts")}
           value={fmt(o?.alerts.total)}
-          hint={t("kpi.criticalShort", { n: fmt(o?.alerts.by_severity?.CRITICAL) })}
+          hint={t("kpi.criticalShort", {
+            n: fmt(o?.alerts.by_severity?.CRITICAL),
+          })}
           accent="red"
           icon={<AlertTriangle className="h-4 w-4" />}
         />
@@ -48,7 +62,10 @@ export default async function ManagerHome() {
         />
         <KpiCard
           label={t("kpi.recent")}
-          value={fmt((o?.suspicious.transactions ?? 0) + (o?.suspicious.activity_logs ?? 0))}
+          value={fmt(
+            (o?.suspicious.transactions ?? 0) +
+              (o?.suspicious.activity_logs ?? 0),
+          )}
           hint={t("kpi.recentHint")}
           accent="yellow"
           icon={<Database className="h-4 w-4" />}

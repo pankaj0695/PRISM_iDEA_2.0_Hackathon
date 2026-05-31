@@ -6,16 +6,21 @@ import { Panel } from "@/components/ub/Panel";
 import { KpiCard } from "@/components/ub/KpiCard";
 import { Button } from "@/components/ub/Button";
 import { COOKIE_NAME, verifyToken } from "@/lib/auth/jwt";
+import { getBaseUrl } from "@/lib/api/base-url";
 
 async function fetchMe() {
   const jar = await cookies();
   const cookie = jar.toString();
-  const base = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const r = await fetch(`${base}/api/me/activity?limit=10`, {
-    headers: { cookie },
-    cache: "no-store",
-  });
-  return r.ok ? r.json() : null;
+  try {
+    const r = await fetch(`${getBaseUrl()}/api/me/activity?limit=10`, {
+      headers: { cookie },
+      cache: "no-store",
+    });
+    if (!r.ok) return null;
+    return r.json();
+  } catch {
+    return null;
+  }
 }
 
 export default async function EmployeeHome() {

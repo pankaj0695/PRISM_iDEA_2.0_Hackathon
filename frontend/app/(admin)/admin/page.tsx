@@ -14,6 +14,7 @@ import { Panel } from "@/components/ub/Panel";
 import { OperationsMonitor } from "@/components/operations/OperationsMonitor";
 import { SeverityTrend } from "@/components/charts/SeverityTrend";
 import { Button } from "@/components/ub/Button";
+import { getBaseUrl } from "@/lib/api/base-url";
 
 interface Overview {
   collections: {
@@ -33,9 +34,8 @@ interface Overview {
 async function fetchOverview(): Promise<Overview | null> {
   const jar = await cookies();
   const cookie = jar.toString();
-  const base = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   try {
-    const r = await fetch(`${base}/api/stats/overview`, {
+    const r = await fetch(`${getBaseUrl()}/api/stats/overview`, {
       headers: { cookie },
       cache: "no-store",
     });

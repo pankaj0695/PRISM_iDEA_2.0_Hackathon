@@ -10,14 +10,18 @@ import { BeliefMassBars } from "@/components/alerts/BeliefMassBars";
 import { CausalChain } from "@/components/alerts/CausalChain";
 import { AlertActions } from "@/components/alerts/AlertActions";
 import { COOKIE_NAME, verifyToken } from "@/lib/auth/jwt";
+import { getBaseUrl } from "@/lib/api/base-url";
 
 async function fetchAlert(id: string) {
   const jar = await cookies();
   const cookie = jar.toString();
-  const base = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const r = await fetch(`${base}/api/alerts/${id}`, { headers: { cookie }, cache: "no-store" });
-  if (!r.ok) return null;
-  return r.json();
+  try {
+    const r = await fetch(`${getBaseUrl()}/api/alerts/${id}`, { headers: { cookie }, cache: "no-store" });
+    if (!r.ok) return null;
+    return r.json();
+  } catch {
+    return null;
+  }
 }
 
 export default async function ManagerAlertDetail({
