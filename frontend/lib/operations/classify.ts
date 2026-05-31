@@ -13,7 +13,7 @@ const BULK_EXPORT_THRESHOLD = 100;
 const BULK_ACCESS_THRESHOLD = 20;
 
 function isOffHours(d: Date): boolean {
-  const h = d.getHours();
+  const h = d.getUTCHours();
   return h < 9 || h >= 18;
 }
 

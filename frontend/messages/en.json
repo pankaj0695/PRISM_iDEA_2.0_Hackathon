@@ -219,6 +219,13 @@
         "label": "Change configuration",
         "hint": "System config touch — always reviewed by an analyst."
       }
-    }
+    },
+    "submitted": "Operation Submitted",
+    "submittedDesc": "has been logged and is being monitored.",
+    "logId": "Log ID",
+    "timestamp": "Timestamp",
+    "target": "Target",
+    "txnId": "Transaction ID",
+    "monitoringActive": "Fraud monitoring is active. Any anomalies will be escalated to the admin dashboard automatically."
   }
 }

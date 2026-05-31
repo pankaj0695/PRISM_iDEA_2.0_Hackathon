@@ -3,6 +3,7 @@ import { withAuth } from "@/lib/auth/withAuth";
 import { COLLECTIONS, getCollection } from "@/lib/db/mongo";
 import { parseBody, ok, serverError, bad } from "@/lib/api/respond";
 import { runDetection } from "@/lib/detect";
+import { mockDetector } from "@/lib/detect/mockDetector";
 import { publish } from "@/lib/realtime/sse";
 import { classifyOperation } from "@/lib/operations/classify";
 import type { OperationAction, OperationRequest } from "@/lib/operations/types";
@@ -139,7 +140,7 @@ export const POST = withAuth(async (req, { user }) => {
     // 3. If suspicious, run the detector and publish an alert.
     let alert: Alert | null = null;
     if (classification.suspicious && classification.suspicion_type) {
-      const detection = await runDetection({
+      const detectionReq = {
         employee_id: employee.employee_id,
         event_type: classification.suspicion_type,
         event_metadata: {
@@ -150,7 +151,14 @@ export const POST = withAuth(async (req, { user }) => {
           log.log_id,
           ...(transaction ? [transaction.transaction_id] : []),
         ],
-      });
+      };
+      let detection;
+      try {
+        detection = await runDetection(detectionReq);
+      } catch (e) {
+        console.warn("[operations] primary detector failed, falling back to mock:", (e as Error).message);
+        detection = await mockDetector.run(detectionReq);
+      }
       alert = {
         alert_id: newId("ALERT"),
         employee_id: employee.employee_id,

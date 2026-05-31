@@ -10,7 +10,7 @@ const PUBLIC_PATHS = [
   "/api/locale", // language switcher works before sign-in
 ];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (
@@ -54,7 +54,10 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/admin") && !["ADMIN", "FRAUD_ANALYST"].includes(user.role)) {
     return NextResponse.redirect(new URL(homeForRole(user.role), req.url));
   }
-  if (pathname.startsWith("/manager") && !["BRANCH_MANAGER", "COMPLIANCE_OFFICER", "ADMIN", "FRAUD_ANALYST"].includes(user.role)) {
+  if (
+    pathname.startsWith("/manager") &&
+    !["BRANCH_MANAGER", "COMPLIANCE_OFFICER", "ADMIN", "FRAUD_ANALYST"].includes(user.role)
+  ) {
     return NextResponse.redirect(new URL(homeForRole(user.role), req.url));
   }
   return NextResponse.next();

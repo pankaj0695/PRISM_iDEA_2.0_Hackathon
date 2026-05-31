@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import {
-  AlertTriangle,
   CheckCircle2,
   CreditCard,
   Database,
@@ -20,10 +19,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ub/Button";
 import { Panel } from "@/components/ub/Panel";
-import { SeverityBadge } from "@/components/ub/SeverityBadge";
-import { BeliefMassBars } from "@/components/alerts/BeliefMassBars";
-import { CausalChain } from "@/components/alerts/CausalChain";
-import type { Alert, ActivityLog, Transaction } from "@/lib/db/schemas";
+import { OperationSimulator } from "./OperationSimulator";
+import type { ActivityLog, Transaction } from "@/lib/db/schemas";
 import type { OperationAction } from "@/lib/operations/types";
 
 type Result = {
@@ -36,7 +33,7 @@ type Result = {
   };
   log: ActivityLog;
   transaction: Transaction | null;
-  alert: Alert | null;
+  alert: { alert_id: string } | null;
 };
 
 interface ActionCfg {
@@ -80,15 +77,24 @@ export function OperationsConsole({ scope }: { scope: "EMPLOYEE" | "MANAGER" }) 
   const [pretendOffHours, setPretendOffHours] = useState(false);
 
   const [busy, setBusy] = useState(false);
+  const [simDone, setSimDone] = useState(true);   // false while simulator is running
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  // Show the simulator whenever it's running (sim not done) OR api still in flight
+  const showSim = !simDone || busy;
+  // Show confirmation only when both sim AND api are done
+  const showResult = simDone && !busy && result !== null;
 
   function reset() {
     setResult(null);
     setError(null);
+    setSimDone(true);
   }
 
   async function execute() {
+    // Reset and start both the simulator and the API call together
+    setSimDone(false);
     setBusy(true);
     setError(null);
     setResult(null);
@@ -101,9 +107,8 @@ export function OperationsConsole({ scope }: { scope: "EMPLOYEE" | "MANAGER" }) 
       if (active.fields.includes("accounts") && accountIds)
         body.account_ids = accountIds.split(/[\s,]+/).map((s) => s.trim()).filter(Boolean);
       if (pretendOffHours) {
-        // 02:47 AM today — same trick used in the doc's classic example.
         const d = new Date();
-        d.setHours(2, 47, 0, 0);
+        d.setUTCHours(2, 47, 0, 0);
         body.pretend_now = d.toISOString();
       }
 
@@ -126,6 +131,7 @@ export function OperationsConsole({ scope }: { scope: "EMPLOYEE" | "MANAGER" }) 
 
   return (
     <div className="space-y-4">
+      {/* Action selector */}
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {allActions.map((a) => {
           const I = a.icon;
@@ -134,10 +140,7 @@ export function OperationsConsole({ scope }: { scope: "EMPLOYEE" | "MANAGER" }) 
             <button
               key={a.action}
               type="button"
-              onClick={() => {
-                setActive(a);
-                reset();
-              }}
+              onClick={() => { setActive(a); reset(); }}
               className={`group ub-card relative overflow-hidden p-3 text-left transition hover:shadow-[var(--shadow-pop)] ${
                 isActive ? "ring-2 ring-[var(--ub-blue)]" : ""
               }`}
@@ -159,6 +162,7 @@ export function OperationsConsole({ scope }: { scope: "EMPLOYEE" | "MANAGER" }) 
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[420px_1fr]">
+        {/* Form panel */}
         <Panel
           eyebrow={t("operations.formEyebrow")}
           title={/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -174,64 +178,35 @@ export function OperationsConsole({ scope }: { scope: "EMPLOYEE" | "MANAGER" }) 
             )}
             {active.fields.includes("amount") && (
               <Field label={t("operations.fields.amount")}>
-                <input
-                  className="ub-input"
-                  type="number"
-                  min={0}
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="500000"
-                />
+                <input className="ub-input" type="number" min={0} value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="500000" />
               </Field>
             )}
             {active.fields.includes("records") && (
               <Field label={t("operations.fields.recordCount")}>
-                <input
-                  className="ub-input"
-                  type="number"
-                  min={0}
-                  value={recordCount}
-                  onChange={(e) => setRecordCount(e.target.value)}
-                  placeholder="847"
-                />
+                <input className="ub-input" type="number" min={0} value={recordCount} onChange={(e) => setRecordCount(e.target.value)} placeholder="847" />
               </Field>
             )}
             {active.fields.includes("accounts") && (
               <Field label={t("operations.fields.accountIds")}>
-                <textarea
-                  className="ub-input"
-                  rows={3}
-                  value={accountIds}
-                  onChange={(e) => setAccountIds(e.target.value)}
-                  placeholder="ACC_00001, ACC_00002, ACC_00003 …"
-                />
+                <textarea className="ub-input" rows={3} value={accountIds} onChange={(e) => setAccountIds(e.target.value)} placeholder="ACC_00001, ACC_00002, ACC_00003 …" />
               </Field>
             )}
             {active.fields.includes("narration") && (
               <Field label={t("operations.fields.narration")}>
-                <input
-                  className="ub-input"
-                  value={narration}
-                  onChange={(e) => setNarration(e.target.value)}
-                  placeholder={t("operations.fields.narrationPlaceholder")}
-                />
+                <input className="ub-input" value={narration} onChange={(e) => setNarration(e.target.value)} placeholder={t("operations.fields.narrationPlaceholder")} />
               </Field>
             )}
 
             <label className="flex items-center gap-2 rounded-md bg-[var(--ub-blue-50)] px-2.5 py-1.5 text-xs text-[var(--ub-blue)]">
-              <input
-                type="checkbox"
-                checked={pretendOffHours}
-                onChange={(e) => setPretendOffHours(e.target.checked)}
-                className="h-3.5 w-3.5"
-              />
+              <input type="checkbox" checked={pretendOffHours} onChange={(e) => setPretendOffHours(e.target.checked)} className="h-3.5 w-3.5" />
               {t("operations.fields.pretendOffHours")}
             </label>
 
-            <Button onClick={execute} disabled={busy} size="lg" className="w-full">
+            <Button onClick={execute} disabled={busy || !simDone} size="lg" className="w-full">
               <Zap className="h-4 w-4" />
-              {busy ? t("operations.executing") : t("operations.execute")}
+              {(busy || !simDone) ? t("operations.executing") : t("operations.execute")}
             </Button>
+
             {error && (
               <div className="rounded-md border border-[var(--ub-red)] bg-[var(--ub-red-50)] px-3 py-2 text-sm text-[var(--ub-red-dark)]">
                 {error}
@@ -256,94 +231,22 @@ export function OperationsConsole({ scope }: { scope: "EMPLOYEE" | "MANAGER" }) 
           `}</style>
         </Panel>
 
+        {/* Result / Simulator panel */}
         <Panel title={t("operations.resultTitle")} description={t("operations.resultSubtitle")}>
-          {!result ? (
+          {showSim ? (
+            <OperationSimulator
+              action={active.action}
+              account={account}
+              amount={amount}
+              accountIds={accountIds.split(/[\s,]+/).filter(Boolean)}
+              recordCount={recordCount}
+              onComplete={() => setSimDone(true)}
+            />
+          ) : showResult ? (
+            <SubmittedCard result={result!} action={active.action} />
+          ) : (
             <div className="rounded-md border border-dashed border-[var(--border-strong)] p-8 text-center text-sm text-[var(--fg-muted)]">
               {t("operations.placeholder")}
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <div
-                className={`flex flex-wrap items-center gap-3 rounded-md p-3 ${
-                  result.classification.suspicious
-                    ? "bg-[var(--ub-red-50)]"
-                    : "bg-emerald-50"
-                }`}
-              >
-                {result.classification.suspicious ? (
-                  <AlertTriangle className="h-5 w-5 text-[var(--ub-red)]" />
-                ) : (
-                  <CheckCircle2 className="h-5 w-5 text-emerald-700" />
-                )}
-                <div className="flex-1 text-sm font-semibold text-[var(--fg)]">
-                  {result.classification.suspicious
-                    ? t("operations.flagged")
-                    : t("operations.clean")}
-                </div>
-                {result.alert && (
-                  <SeverityBadge severity={result.alert.severity} pulse={result.alert.severity === "CRITICAL"} />
-                )}
-              </div>
-
-              {result.classification.reasons.length > 0 && (
-                <ul className="space-y-1 rounded-md border border-[var(--border)] bg-[var(--bg-soft)] p-3 text-[12.5px] text-[var(--fg)]">
-                  {result.classification.reasons.map((r, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--ub-blue)]" />
-                      <span>{r}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {result.alert && (
-                <>
-                  <div className="flex flex-wrap gap-3 text-sm">
-                    <span>
-                      {t("alert.riskScore")}:{" "}
-                      <span className="font-bold tabular-nums text-[var(--sev-critical)]">
-                        {Math.round(result.alert.risk_score * 100)}
-                      </span>
-                    </span>
-                    <span className="text-[var(--fg-muted)]">
-                      L1 {Math.round(result.alert.layer1.score * 100)} · L2{" "}
-                      {Math.round(result.alert.layer2.score * 100)}
-                    </span>
-                  </div>
-                  <div className="grid gap-3 md:grid-cols-3">
-                    <BeliefMassBars title={t("alert.beliefLayer1")} masses={result.alert.layer1.belief} />
-                    <BeliefMassBars title={t("alert.beliefLayer2")} masses={result.alert.layer2.belief} />
-                    <BeliefMassBars title={t("alert.beliefFused")} masses={result.alert.fused_belief} />
-                  </div>
-                  <CausalChain steps={result.alert.causal_chain} chainProbability={result.alert.chain_probability} />
-                </>
-              )}
-
-              <details className="rounded-md border border-[var(--border)] p-3 text-xs">
-                <summary className="cursor-pointer font-semibold text-[var(--fg-muted)]">
-                  {t("operations.rawRecords")}
-                </summary>
-                <div className="mt-2 space-y-2">
-                  <div>
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-[var(--fg-muted)]">
-                      Activity log
-                    </div>
-                    <code className="block whitespace-pre-wrap break-all rounded bg-[var(--bg-soft)] p-2 text-[11px]">
-                      {JSON.stringify(result.log, null, 2)}
-                    </code>
-                  </div>
-                  {result.transaction && (
-                    <div>
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[var(--fg-muted)]">
-                        Transaction
-                      </div>
-                      <code className="block whitespace-pre-wrap break-all rounded bg-[var(--bg-soft)] p-2 text-[11px]">
-                        {JSON.stringify(result.transaction, null, 2)}
-                      </code>
-                    </div>
-                  )}
-                </div>
-              </details>
             </div>
           )}
         </Panel>
@@ -354,9 +257,59 @@ export function OperationsConsole({ scope }: { scope: "EMPLOYEE" | "MANAGER" }) 
   );
 }
 
-interface MyActivityResp {
-  activity: ActivityLog[];
+/* ── Submitted confirmation card (no detection scores exposed) ────── */
+
+function SubmittedCard({ result, action }: { result: Result; action: OperationAction }) {
+  const t = useTranslations();
+  const isFlagged = result.log.status === "FLAGGED";
+  return (
+    <div className="space-y-4 ub-anim-in">
+      {/* Status banner */}
+      <div className={`flex items-start gap-4 rounded-lg p-4 ${isFlagged ? "bg-amber-50 ring-1 ring-amber-200" : "bg-emerald-50 ring-1 ring-emerald-200"}`}>
+        <div className={`mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-full ${isFlagged ? "bg-amber-100" : "bg-emerald-100"}`}>
+          <CheckCircle2 className={`h-5 w-5 ${isFlagged ? "text-amber-700" : "text-emerald-700"}`} />
+        </div>
+        <div>
+          <div className={`font-semibold ${isFlagged ? "text-amber-800" : "text-emerald-800"}`}>
+            {t("operations.submitted")}
+          </div>
+          <div className={`mt-0.5 text-sm ${isFlagged ? "text-amber-700" : "text-emerald-700"}`}>
+            {action.replace(/_/g, " ")} {t("operations.submittedDesc")}
+          </div>
+        </div>
+      </div>
+
+      {/* Minimal log details — no scores */}
+      <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-soft)] divide-y divide-[var(--border)] text-[12.5px]">
+        <Row label={t("operations.logId")} value={result.log.log_id} mono />
+        <Row label={t("operations.timestamp")} value={format(new Date(result.log.action_datetime), "dd MMM yyyy, HH:mm:ss")} />
+        <Row label={t("operations.target")} value={result.log.target_entity_id} mono />
+        {result.transaction && (
+          <Row label={t("operations.txnId")} value={result.transaction.transaction_id} mono />
+        )}
+      </div>
+
+      {/* Monitoring notice */}
+      <div className="flex items-center gap-2.5 rounded-md border border-[var(--ub-blue-100)] bg-[var(--ub-blue-50)] px-3 py-2.5 text-[12px] text-[var(--ub-blue)]">
+        <ShieldCheck className="h-4 w-4 shrink-0" />
+        <span>{t("operations.monitoringActive")}</span>
+      </div>
+    </div>
+  );
 }
+
+function Row({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <div className="flex items-center justify-between gap-4 px-3 py-2">
+      <span className="text-[var(--fg-muted)]">{label}</span>
+      <span className={`text-right text-[var(--fg)] ${mono ? "font-mono" : "font-medium"}`}>{value}</span>
+    </div>
+  );
+}
+
+/* ── Recent ops feed ─────────────────────────────────────────────── */
+
+interface MyActivityResp { activity: ActivityLog[] }
 
 function RecentOps() {
   const t = useTranslations();

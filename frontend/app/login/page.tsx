@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { LockKeyhole, ChevronRight } from "lucide-react";
@@ -16,7 +16,6 @@ const DEMO_USERS = [
 
 export default function LoginPage() {
   const t = useTranslations();
-  const router = useRouter();
   const sp = useSearchParams();
   const next = sp.get("next") || "/";
   const [code, setCode] = useState("");
@@ -37,8 +36,7 @@ export default function LoginPage() {
       });
       const data = await r.json();
       if (!r.ok) throw new Error(data.error || "Login failed");
-      router.push(next);
-      router.refresh();
+      window.location.href = next;
     } catch (e) {
       setError((e as Error).message);
     } finally {

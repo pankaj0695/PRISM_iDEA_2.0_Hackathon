@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown, LogOut, ShieldCheck } from "lucide-react";
@@ -32,7 +32,6 @@ export function UnionBankHeader({
   const t = useTranslations();
   const [user, setUser] = useState<MeUser | null>(null);
   const [open, setOpen] = useState(false);
-  const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -44,7 +43,7 @@ export function UnionBankHeader({
 
   async function logout() {
     await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
-    router.push("/login");
+    window.location.href = "/login";
   }
 
   const initials = (user?.name || "??")

@@ -1,6 +1,10 @@
 import { UnionBankHeader } from "@/components/ub/UnionBankHeader";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="min-h-screen">
       <UnionBankHeader
@@ -9,7 +13,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           { href: "/admin", labelKey: "nav.overview" },
           { href: "/admin/alerts", labelKey: "nav.alerts" },
           { href: "/admin/graph", labelKey: "nav.graph" },
-          { href: "/admin/whatif", labelKey: "nav.whatIf" },
         ]}
       />
       <main className="mx-auto max-w-[1400px] px-6 py-6">{children}</main>

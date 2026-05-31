@@ -8,11 +8,10 @@ import {
   Database,
   Users,
   GitBranch,
-  Wand2,
 } from "lucide-react";
 import { KpiCard } from "@/components/ub/KpiCard";
 import { Panel } from "@/components/ub/Panel";
-import { AlertList } from "@/components/alerts/AlertList";
+import { OperationsMonitor } from "@/components/operations/OperationsMonitor";
 import { SeverityTrend } from "@/components/charts/SeverityTrend";
 import { Button } from "@/components/ub/Button";
 
@@ -67,11 +66,6 @@ export default async function AdminHome() {
           <p className="text-sm text-[var(--fg-muted)]">{t("admin.subtitle")}</p>
         </div>
         <div className="flex gap-2">
-          <Link href="/admin/whatif">
-            <Button variant="secondary">
-              <Wand2 className="h-4 w-4" /> {t("admin.openWhatIf")}
-            </Button>
-          </Link>
           <Link href="/admin/graph">
             <Button>
               <GitBranch className="h-4 w-4" /> {t("admin.openGraph")}
@@ -124,13 +118,13 @@ export default async function AdminHome() {
         <KpiCard label={t("kpi.dependents")} value={fmt(c?.dependents)} icon={<Users className="h-4 w-4" />} />
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
         <Panel
           eyebrow="LIVE"
           title={t("feed.liveTitle")}
           description={t("feed.liveSubtitle")}
         >
-          <AlertList basePath="/admin/alerts" />
+          <OperationsMonitor basePath="/admin/alerts" />
         </Panel>
         <Panel title={t("feed.severityTrend")} description={t("feed.severityTrendSubtitle")}>
           <SeverityTrend />
