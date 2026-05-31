@@ -46,7 +46,7 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen flex-col">
-      {/* Tri-colour Union Bank strip */}
+      {/* Accent bar */}
       <div className="ub-divider" />
 
       {/* Brand row */}
@@ -62,14 +62,7 @@ export default function LoginPage() {
                 className="rounded-full object-contain"
               />
             </span>
-            <span className="leading-tight">
-              <span className="block text-[13px] font-bold text-[var(--ub-red)]">
-                यूनियन बैंक
-              </span>
-              <span className="block text-[11px] font-semibold text-[var(--ub-blue)]">
-                Union Bank of India
-              </span>
-            </span>
+            <span className="text-[15px] font-bold tracking-tight text-[var(--fg)]">PRISM</span>
           </div>
           <div className="ml-auto">
             <div className="rounded-full bg-[var(--ub-blue)] p-0.5">
@@ -212,7 +205,7 @@ export default function LoginPage() {
       <footer className="bg-white py-3">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-6 text-[11px] text-[var(--fg-muted)]">
           <span>{t("brand.bannerStrip")}</span>
-          <span>© Union Bank of India · iDEA 2.0 Hackathon</span>
+          <span>© {new Date().getFullYear()} PRISM · iDEA 2.0 Hackathon</span>
         </div>
       </footer>
     </main>

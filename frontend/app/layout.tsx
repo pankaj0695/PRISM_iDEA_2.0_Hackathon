@@ -5,6 +5,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { LOCALE_META, type Locale } from "@/lib/i18n/locales";
+import { Icon } from "lucide-react";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -19,10 +20,10 @@ const devanagari = Noto_Sans_Devanagari({
 });
 
 export const metadata: Metadata = {
-  title: "PRISM — Union Bank of India",
+  title: "PRISM - Fraud Intelligence Platform",
   description:
-    "Privileged-user Risk Identification and Surveillance Monitoring — AI-powered insider fraud detection for Union Bank of India.",
-  icons: { icon: "/PRISM_logo.png" },
+    "Privileged-user Risk Identification and Surveillance Monitoring - AI-powered insider fraud detection for financial institutions.",
+  icons: { icon: "/favicon.ico" },
 };
 
 export default async function RootLayout({
@@ -38,7 +39,10 @@ export default async function RootLayout({
       dir={dir}
       className={`${inter.variable} ${devanagari.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[var(--bg-soft)] text-[var(--fg)]">
+      <body
+        className="min-h-full bg-[var(--bg-soft)] text-[var(--fg)]"
+        suppressHydrationWarning
+      >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AppProviders>{children}</AppProviders>
         </NextIntlClientProvider>

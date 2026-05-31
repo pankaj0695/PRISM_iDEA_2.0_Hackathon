@@ -55,10 +55,10 @@ export function UnionBankHeader({
 
   return (
     <header className="sticky top-0 z-30">
-      {/* Tri-colour strip — Union Bank flag accent (red / yellow / blue) */}
+      {/* Accent bar */}
       <div className="ub-divider" />
 
-      {/* Brand row — white, with Union Bank Hindi/English lockup */}
+      {/* Brand row */}
       <div className="border-b border-[var(--border)] bg-white">
         <div className="mx-auto flex h-16 max-w-[1400px] items-center gap-4 px-6">
           <Link href={homeHref} className="flex items-center gap-3">
@@ -72,20 +72,11 @@ export function UnionBankHeader({
               />
             </span>
             <span className="leading-tight">
-              <span className="block text-[15px] font-bold text-[var(--ub-red)]">
-                यूनियन बैंक
-              </span>
-              <span className="block text-[13px] font-semibold text-[var(--ub-blue)]">
-                Union Bank of India
-              </span>
-            </span>
-            <span className="mx-3 h-9 w-px bg-[var(--border-strong)]" />
-            <span className="leading-tight">
-              <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--fg-muted)]">
-                {t("brand.tagline")}
-              </span>
-              <span className="block text-base font-bold text-[var(--fg)]">
+              <span className="block text-xl font-extrabold tracking-tight text-[var(--fg)]">
                 PRISM
+              </span>
+              <span className="block text-[11px] text-[var(--fg-muted)] max-w-[260px] truncate">
+                {t("brand.tagline")}
               </span>
             </span>
           </Link>
@@ -104,7 +95,7 @@ export function UnionBankHeader({
                 onClick={() => setOpen((v) => !v)}
                 className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-2 py-1.5 text-sm shadow-sm hover:bg-[var(--bg-soft)]"
               >
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-[var(--ub-red)] text-xs font-semibold text-white">
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-[var(--ub-blue)] text-xs font-semibold text-white">
                   {initials}
                 </span>
                 <span className="hidden text-left leading-tight md:block">

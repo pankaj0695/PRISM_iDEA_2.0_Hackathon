@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Union Bank of India palette — sampled from the official site */
+  /* PRISM design palette */
   --ub-red: #e30613;
   --ub-red-dark: #b50410;
   --ub-red-50: #fff1f2;
@@ -129,12 +129,9 @@ body {
   height: 3px;
   background: linear-gradient(
     90deg,
-    var(--ub-red) 0%,
-    var(--ub-red) 33%,
-    var(--ub-yellow) 33%,
-    var(--ub-yellow) 66%,
-    var(--ub-blue) 66%,
-    var(--ub-blue) 100%
+    var(--ub-blue-dark) 0%,
+    var(--ub-blue) 40%,
+    var(--ub-blue-700) 100%
   );
 }
 
